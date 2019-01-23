@@ -18,7 +18,9 @@ QT += websockets
 
 SOURCES += \
         main.cpp \
-    basedatos.cpp
+    basedatos.cpp \
+    websocket.cpp
 
 HEADERS += \
-    basedatos.h
+    basedatos.h \
+    websocket.h

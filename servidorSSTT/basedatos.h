@@ -5,8 +5,9 @@
 class BaseDatos
 {
 public:
-    void connectDatabase();
     BaseDatos();
+    void connectDatabase();
+
 };
 
 #endif // BASEDATOS_H
