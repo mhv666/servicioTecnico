@@ -1,6 +1,7 @@
 QT -= gui
-
+QT += xml
 CONFIG += c++11 console
+LIBS += -lxml2
 CONFIG -= app_bundle
 TARGET = xml_dtd
 
@@ -19,8 +20,10 @@ QT += websockets
 SOURCES += \
         main.cpp \
     basedatos.cpp \
-    websocket.cpp
+    websocket.cpp \
+    xmlhandler.cpp
 
 HEADERS += \
     basedatos.h \
-    websocket.h
+    websocket.h \
+    xmlhandler.h

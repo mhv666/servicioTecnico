@@ -4,27 +4,30 @@
 #include <QtCore/QObject>
 #include <QtCore/QList>
 #include <QtCore/QByteArray>
-class QwebSocketServer;
+#include "QtWebSockets/qwebsocketserver.h"
+#include "QtWebSockets/qwebsocket.h"
+
+class QWebSocketServer;
 class QWebSocket;
 
-class WebSocket :public QObject
+class WebSocket : public QObject
 {
     Q_OBJECT
 
 public:
-    WebSocket();
-    void Listen(quint16 port);
+    explicit WebSocket(quint16 port);
     ~WebSocket();
 
 signals:
     void closed();
+
 private slots:
     void onNewConnection();
     void proessTextMessage(QString message);
     void socketDisconnected();
 
 private:
-    QwebSocketServer *m_webSocketServer;
+    QWebSocketServer *m_webSocketServer;
     QList<QWebSocket *>m_clients;
 };
 

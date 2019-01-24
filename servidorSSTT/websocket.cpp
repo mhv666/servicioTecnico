@@ -1,27 +1,25 @@
 #include "websocket.h"
 #include "QtWebSockets/qwebsocketserver.h"
 #include "QtWebSockets/qwebsocket.h"
-#include <QDebug>
-WebSocket::WebSocket()
+#include <QtCore/QDebug>
+
+WebSocket::WebSocket(quint16 port):
+    m_webSocketServer(new QWebSocketServer(QStringLiteral("Central server"),
+                                           QWebSocketServer::NonSecureMode,this))
 {
+    if (m_webSocketServer->listen(QHostAddress::Any,port))
+    {
+        qDebug()<<"Server iniciado en :"<< port;
+        connect(m_webSocketServer, &QWebSocketServer::newConnection,this,&WebSocket::onNewConnection);
+        connect(m_webSocketServer, &QWebSocketServer::closed,this,&WebSocket::closed);
+    }//End if
+
 
 }
 WebSocket::~WebSocket()
 {
   m_webSocketServer->close();
   qDeleteAll(m_clients.begin(),m_clients.end());
-}
-void WebSocket::Listen(quint16 port):
-m_webSocketServer(new QwebSocketServer(QStringLiteral("Central server"),
-                                       QWebSocketServer::NonSecureMode,this)){
-    if (m_webSocketServer->listen(QHostAddress::Any,port))
-    {
-        qDebug()<<"Server iniciado en :"<< port;
-        connect(m_webSocketServer, &QwebSocketServer::newConnection,this,&WebSocket::onNewConnection);
-        connect(m_webSocketServer, &QwebSocketServer::closed,this,&WebSocket::closed);
-    }//End if
-
-
 }
 void WebSocket::onNewConnection()
 {
@@ -36,7 +34,8 @@ void WebSocket::onNewConnection()
 
 void WebSocket::proessTextMessage(QString message)
 {
-    QWebSocket *pClient = qobject_cast<QwebSocket *>(sender());
+    QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
+
     qDebug() << "De:" << pClient << "Mensaje recibido:" << message;
 
 }
