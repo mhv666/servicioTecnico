@@ -1,8 +1,10 @@
 #include "xmlhandler.h"
 #include <iostream>
+#include <QDebug>
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 #include <QDomDocument>
+#include <QDomDocumentType>
 
 
 
@@ -45,6 +47,43 @@ bool XmlHandler::validaXML(const char *xml)
 
     return result;
 }
+bool XmlHandler::validarDomInsert(QString xml){
+    QDomDocument doc;
+    QDomDocumentType docdtd();
+
+
+    doc.setContent(xml);
+    QDomElement root = doc.documentElement();
+    QString rootTag = root.tagName();
+    qDebug()<<"The ROOT tag is"<<rootTag;
+    QDomElement header =root.firstChild().toElement();
+    QDomElement payload =header.nextSibling().toElement();
+    qDebug()<<"The header tag is"<<header.tagName();
+    qDebug()<<"The payload tag is"<<payload.tagName();
+    QDomElement type = header.firstChild().toElement();
+    qDebug()<<"The type tag is"<<type.tagName();
+    QDomElement user = payload.firstChild().toElement();
+    QDomElement telefono = user.nextSibling().toElement();
+    QDomElement tienda = user.nextSibling().nextSibling().toElement();
+    qDebug()<<"The type user is"<<user.tagName();
+    qDebug()<<"The type telefono is"<<telefono.tagName();
+    qDebug()<<"The type tienda  is"<<tienda.tagName();
+    QDomElement nombre = user.firstChild().toElement();
+    QDomElement apellido = nombre.nextSibling().toElement();
+    QDomElement numTlf = nombre.nextSibling().nextSibling().toElement();
+    qDebug()<<"The type nombre is"<<nombre.tagName();
+    qDebug()<<"The type apellido is"<<apellido.tagName();
+    qDebug()<<"The type numTlf is"<<numTlf.tagName();
+    QDomElement marca = telefono.firstChild().toElement();
+    QDomElement modelo = marca.nextSibling().toElement();
+    qDebug()<<"The type marca is"<<marca.tagName();
+    qDebug()<<"The type modelo is"<<modelo.tagName();
+    QDomElement idTienda = tienda.firstChild().toElement();
+    qDebug()<<"The type id is"<<idTienda.tagName();
+
+
+}
+
 QString XmlHandler::read( QString xml ,QString nombreTag){
 
 QDomDocument doc;

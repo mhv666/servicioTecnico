@@ -7,6 +7,7 @@ class XmlHandler
 public:
     XmlHandler();
     bool validaXML(const char *xml);
+    bool validarDomInsert(QString xml);
     QString read( QString xml,QString nombreTag);
 };
 
