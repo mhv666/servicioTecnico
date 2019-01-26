@@ -1,0 +1,7 @@
+<!ELEMENT telefonos(headder,payload)>
+<!ELEMENT headder (tipo)>
+<!ELEMENT tipo (#PCDATA)>
+<!ELEMENT payload (telefono)>
+<!ELEMENT telefono (marca,modelo)>
+<!ELEMENT marca (#PCDATA)>
+<!ELEMENT modelo (#PCDATA)>

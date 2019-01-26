@@ -83,6 +83,41 @@ bool XmlHandler::validarDomInsert(QString xml){
 
 
 }
+bool XmlHandler::QstringToXml(QString message){
+xmlDocPtr doc;
+if (read(message,"tipo") == "request")
+{
+   doc = xmlReadMemory(message.toStdString().c_str(),strlen(message.toStdString().c_str()),"modelos.xml",NULL,0);
+   if (doc ==NULL)
+   {
+       qDebug()<<"error alconvertir a modelos.xml";
+
+       return false;
+   }
+    xmlSaveFormatFile("modelos.xml",doc,1);
+   return true;
+}else if(read(message,"tipo") == "insert")
+{
+    doc = xmlReadMemory(message.toStdString().c_str(),strlen(message.toStdString().c_str()),"nuevaOrden.xml",NULL,0);
+    if (doc ==NULL)
+    {
+        qDebug()<<"error alconvertir a nuevaOrden.xml";
+        return false;
+    }
+    /**
+     * @brief xmlSaveFormatFile
+     * Guarda el doc en el equipo
+     * @nuevaOrden.xml nombre del documento//Ruta
+     * @doc el documento en si
+     * @1 el formato -> 0=nonformatted, 1=indented formatting, 2= nonindented values.
+     */
+
+    xmlSaveFormatFile("nuevaOrden.xml",doc,1);
+
+    return true;
+}
+
+}
 
 QString XmlHandler::read( QString xml ,QString nombreTag){
 
