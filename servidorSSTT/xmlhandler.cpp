@@ -87,35 +87,35 @@ bool XmlHandler::QstringToXml(QString message){
 xmlDocPtr doc;
 if (read(message,"tipo") == "request")
 {
-   doc = xmlReadMemory(message.toStdString().c_str(),strlen(message.toStdString().c_str()),"modelos.xml",NULL,0);
-   if (doc ==NULL)
-   {
-       qDebug()<<"error alconvertir a modelos.xml";
+       doc = xmlReadMemory(message.toStdString().c_str(),strlen(message.toStdString().c_str()),"modelos.xml",NULL,0);
+       if (doc ==NULL)
+       {
+           qDebug()<<"error alconvertir a modelos.xml";
 
-       return false;
-   }
-    xmlSaveFormatFile("modelos.xml",doc,1);
-   return true;
-}else if(read(message,"tipo") == "insert")
-{
-    doc = xmlReadMemory(message.toStdString().c_str(),strlen(message.toStdString().c_str()),"nuevaOrden.xml",NULL,0);
-    if (doc ==NULL)
+           return false;
+       }
+       /**
+        * @brief xmlSaveFormatFile
+        * Guarda el doc en el equipo
+        * @nuevaOrden.xml nombre del documento//Ruta
+        * @doc el documento en si
+        * @1 el formato -> 0=nonformatted, 1=indented formatting, 2= nonindented values.
+        */
+        xmlSaveFormatFile("modelos.xml",doc,1);
+        xmlFreeDoc(doc);
+       return true;
+    }else if(read(message,"tipo") == "insert")
     {
-        qDebug()<<"error alconvertir a nuevaOrden.xml";
-        return false;
+        doc = xmlReadMemory(message.toStdString().c_str(),strlen(message.toStdString().c_str()),"nuevaOrden.xml",NULL,0);
+        if (doc ==NULL)
+        {
+            qDebug()<<"error alconvertir a nuevaOrden.xml";
+            return false;
+        }
+        xmlSaveFormatFile("nuevaOrden.xml",doc,1);
+        xmlFreeDoc(doc);
+        return true;
     }
-    /**
-     * @brief xmlSaveFormatFile
-     * Guarda el doc en el equipo
-     * @nuevaOrden.xml nombre del documento//Ruta
-     * @doc el documento en si
-     * @1 el formato -> 0=nonformatted, 1=indented formatting, 2= nonindented values.
-     */
-
-    xmlSaveFormatFile("nuevaOrden.xml",doc,1);
-
-    return true;
-}
 
 }
 

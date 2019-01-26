@@ -1,7 +1,8 @@
+#include <QtCore/QDebug>
 #include "websocket.h"
 #include "QtWebSockets/qwebsocketserver.h"
 #include "QtWebSockets/qwebsocket.h"
-#include <QtCore/QDebug>
+#include "xmlhandler.h"
 
 WebSocket::WebSocket(quint16 port):
     m_webSocketServer(new QWebSocketServer(QStringLiteral("Central server"),
@@ -35,6 +36,13 @@ void WebSocket::onNewConnection()
 void WebSocket::proessTextMessage(QString message)
 {
     QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
+    XmlHandler xmlh;
+    if (xmlh.validaXML(message.toStdString().c_str())) {
+       xmlh.QstringToXml(message);
+    }else{
+    qDebug()<< "Error al validar el xml";
+    }
+
 
     qDebug() << "De:" << pClient << "Mensaje recibido:" << message;
 
