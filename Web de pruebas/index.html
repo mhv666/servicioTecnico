@@ -41,18 +41,31 @@
                     </p>
                     <p>
                         <label for="">Marca</label>
-                        <input type="text" name="name" id="">
+                        <!-- <input type="text" name="name" id=""> -->
+                        <select id="marca">
+                            <option value="">Seleccione una:</option>
+                        </select>
                     </p>
-                    <p>
+                    <p class="full">
                         <label for="">Modelo</label>
-                        <input type="text" name="name" id="">
+                        <!-- <input type="text" name="name" id=""> -->
+                        <div class="select">
+                            <select id="marca">
+                                <option value="">Seleccione uno:</option>
+                            </select>
+                        </div>
                     </p>
-
+                    <p class="full">
+                        <button type="button" onclick="reqTelefonos()">Cargar Telefonos</button>
+                    </p>
+                    <p class="full">
+                        <h4 id="error">hola</h4>
+                    </p>
                     <p>
                         <label for="">Id Tienda</label>
                         <input type="text" name="name" id="">
                     </p>
-                    <p class= "full">
+                    <p class="full">
                         <label for="">Descripcion</label>
                         <textarea name="Descripcion" rows="5"></textarea>
                     </p>

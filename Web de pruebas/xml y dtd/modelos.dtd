@@ -1,4 +1,5 @@
-
+<!DOCTYPE telefonos
+[
 <!ELEMENT telefonos (headder,payload)>
 <!ELEMENT header (tipo)>
 <!ELEMENT tipo (#PCDATA)>
@@ -6,3 +7,4 @@
 <!ELEMENT telefono (marca,modelo)>
 <!ELEMENT marca (#PCDATA)>
 <!ELEMENT modelo (#PCDATA)>
+]>

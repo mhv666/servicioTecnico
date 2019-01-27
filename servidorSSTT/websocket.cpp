@@ -37,12 +37,27 @@ void WebSocket::proessTextMessage(QString message)
 {
     QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
     XmlHandler xmlh;
+    xmlh.QstringToXml(message);
+
+    if (xmlh.read(message,"header")=="request")
+    {
+        xmlh.validaXML("modelos.xml");
+       qDebug()<<;
+
+    }else if(xmlh.read(message,"header")=="insert")
+    {
+
+    }
+    //xmlh.validaXML(modelos.c_str());
+
+    /*
+     *
     if (xmlh.validaXML(message.toStdString().c_str())) {
        xmlh.QstringToXml(message);
     }else{
     qDebug()<< "Error al validar el xml";
     }
-
+*/
 
     qDebug() << "De:" << pClient << "Mensaje recibido:" << message;
 
