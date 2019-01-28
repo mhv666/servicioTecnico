@@ -41,12 +41,16 @@ void WebSocket::proessTextMessage(QString message)
 
     if (xmlh.read(message,"header")=="request")
     {
-        xmlh.validaXML("modelos.xml");
-       qDebug()<<;
+        if (xmlh.validaXML("modelos.xml")){
+
+
+        }
+
+        qDebug()<<;
 
     }else if(xmlh.read(message,"header")=="insert")
     {
-
+         xmlh.validaXML("nuevaOrden.xml");
     }
     //xmlh.validaXML(modelos.c_str());
 
