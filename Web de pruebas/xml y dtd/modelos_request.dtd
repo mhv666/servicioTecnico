@@ -1,0 +1,5 @@
+<!ELEMENT document (header,payload)>
+<!ELEMENT header (tipo)>
+<!ELEMENT tipo (#PCDATA)>
+<!ELEMENT payload ()>
+

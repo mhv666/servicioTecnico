@@ -21,9 +21,11 @@ SOURCES += \
         main.cpp \
     basedatos.cpp \
     websocket.cpp \
-    xmlhandler.cpp
+    xmlhandler.cpp \
+    app.cpp
 
 HEADERS += \
     basedatos.h \
     websocket.h \
-    xmlhandler.h
+    xmlhandler.h \
+    app.h

@@ -18,10 +18,10 @@
   }
   function reqTelefonos()
   {
-    var message= '<?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE telefonos SYSTEM "modelos.dtd">'+
-                 '<telefonos><header><tipo>request</tipo></header>'+
-                 '<payload><telefono><marca></marca><modelo></modelo></telefono></payload>'+
-                 '</telefonos>';
+    var message= '<?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE telefonos SYSTEM "modelos_request.dtd">'+
+                 '<document><header><tipo>request_modelos</tipo></header>'+
+                 '<payload></payload>'+
+                 '</document>';
     websocket.send(message);
   }
 

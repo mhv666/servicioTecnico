@@ -36,32 +36,23 @@ void WebSocket::onNewConnection()
 void WebSocket::proessTextMessage(QString message)
 {
     QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
-    XmlHandler xmlh;
+    XmlHandler xmlh;   
     xmlh.QstringToXml(message);
 
-    if (xmlh.read(message,"header")=="request")
+    if (xmlh.readContentOfTag(message,"header")=="request_modelos")
     {
         if (xmlh.validaXML("modelos.xml")){
 
+            emit consultarMarcas();
 
         }
 
-        qDebug()<<;
 
-    }else if(xmlh.read(message,"header")=="insert")
+
+    }else if(xmlh.readContentOfTag(message,"header")=="insert")
     {
          xmlh.validaXML("nuevaOrden.xml");
     }
-    //xmlh.validaXML(modelos.c_str());
-
-    /*
-     *
-    if (xmlh.validaXML(message.toStdString().c_str())) {
-       xmlh.QstringToXml(message);
-    }else{
-    qDebug()<< "Error al validar el xml";
-    }
-*/
 
     qDebug() << "De:" << pClient << "Mensaje recibido:" << message;
 

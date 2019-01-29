@@ -85,7 +85,7 @@ bool XmlHandler::validarDomInsert(QString xml){
 }
 bool XmlHandler::QstringToXml(QString message){
 xmlDocPtr doc;
-if (read(message,"tipo") == "request")
+if (readContentOfTag(message,"tipo") == "modelos_request")
 {
        doc = xmlReadMemory(message.toStdString().c_str(),strlen(message.toStdString().c_str()),"modelos.xml",NULL,0);
        if (doc ==NULL)
@@ -104,7 +104,7 @@ if (read(message,"tipo") == "request")
         xmlSaveFormatFile("modelos.xml",doc,1);
         xmlFreeDoc(doc);
        return true;
-    }else if(read(message,"tipo") == "insert")
+    }else if(readContentOfTag(message,"tipo") == "insert")
     {
         doc = xmlReadMemory(message.toStdString().c_str(),strlen(message.toStdString().c_str()),"nuevaOrden.xml",NULL,0);
         if (doc ==NULL)
@@ -119,7 +119,7 @@ if (read(message,"tipo") == "request")
 
 }
 
-QString XmlHandler::read( QString xml ,QString nombreTag){
+QString XmlHandler::readContentOfTag( QString xml ,QString nombreTag){
 
 QDomDocument doc;
 doc.setContent(xml);

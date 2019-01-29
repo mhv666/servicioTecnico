@@ -6,6 +6,8 @@
 #include <QtCore/QByteArray>
 #include "QtWebSockets/qwebsocketserver.h"
 #include "QtWebSockets/qwebsocket.h"
+#include "app.h"
+
 
 class QWebSocketServer;
 class QWebSocket;
@@ -20,6 +22,7 @@ public:
 
 signals:
     void closed();
+    void consultarMarcas();
 
 private slots:
     void onNewConnection();
@@ -30,5 +33,5 @@ private:
     QWebSocketServer *m_webSocketServer;
     QList<QWebSocket *>m_clients;
 };
-
+extern App *aplicacion;
 #endif // WEBSOCKET_H
