@@ -92,8 +92,11 @@ QStringList BaseDatos::consultarModelos(QString marca)
 
     ///*************************************************************///
     ///TODO: acabar de hacer la query, esta incompleta, falta hacer join
+    ///
+    ///SELECT nombre_modelo_dispositivo FROM modelo_dispositivo JOIN marca_dispositivo ON modelo_dispositivo.id_marca_dispositivo = marca_dispositivo.id_marca_dispositivo WHERE marca_dispositivo.nombre_marca_dispositivo = "Samsung" ;
+    ///
     ///*************************************************************///
-     QSqlQuery query("SELECT nombre_modelo_dispositivo FROM modelo_dispositivo;");
+     QSqlQuery query("SELECT nombre_modelo_dispositivo FROM modelo_dispositivo JOIN marca_dispositivo ON modelo_dispositivo.id_marca_dispositivo = marca_dispositivo.id_marca_dispositivo WHERE marca_dispositivo.nombre_marca_dispositivo = '"+marca+"';");
 
      while (query.next()) {
         modelos.append(query.value(0).toString());

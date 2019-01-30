@@ -125,19 +125,17 @@ QDomElement root = doc.createElement("document");
 QDomElement header = doc.createElement("header");
 QDomElement payload = doc.createElement("payload");
 QDomElement tipo = doc.createElement("tipo");
+tipo.appendChild(doc.createTextNode("modelos_result"));
 QDomElement dispositivos = doc.createElement("dispositivos");
 
 for (int i = 0; i < marcas.size(); ++i) {
     QDomElement dispositivo = doc.createElement("dispositivo");
     QDomElement marca = doc.createElement("marca");
 
-    //QDomText nombreMarca;
-    //nombreMarca.setData(marcas.at(i));
-   // qDebug()<<"MARCAS"<<marcas.at(i);
-    //doc.createTextNode(marcas.at(i));
     marca.appendChild(doc.createTextNode(marcas.at(i)));
     dispositivos.appendChild(dispositivo);
     dispositivo.appendChild(marca);
+
 }
 
 
@@ -149,7 +147,24 @@ doc.appendChild(root);
 
 return doc;
 }
+QDomDocument XmlHandler::generateXmlOfModelos(QDomDocument doc,QStringList modelos,int marca)
+{
 
+
+
+
+        for (int i = 0; i < modelos.size(); ++i)
+        {
+
+            QDomElement modelo = doc.createElement("modelo");
+            modelo.appendChild(doc.createTextNode(modelos.at(i)));
+            doc.elementsByTagName("dispositivo").at(marca).appendChild(modelo);
+        }
+
+
+
+    return doc;
+}
 
 QString XmlHandler::readContentOfTag( QString xml ,QString nombreTag)
 {

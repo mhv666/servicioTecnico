@@ -1,7 +1,7 @@
   var wsUri = "ws://localhost:3344";
   websocket = new WebSocket(wsUri);
   var output;
-
+  var recivedMessage;
   function init()
   {
     error = document.getElementById("error");
@@ -39,8 +39,10 @@
 
   function onMessage(evt)
   {
+    recivedMessage = evt.data;
+    console.log(evt.data);
     
-    writeToScreen('<span style="color: blue;">RESPONSE: ' + evt.data+'</span>');
+    //writeToScreen('<span style="color: blue;">RESPONSE: ' + evt.data+'</span>');
     websocket.close();
   }
 

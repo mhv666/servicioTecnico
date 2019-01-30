@@ -51,10 +51,16 @@ void WebSocket::proessTextMessage(QString message)
 
             QDomDocument xmlDeRespuesta = aplicacion->xmlh->generateXmlOfMarcas(marcas);
 
-           /* for (int i = 0; i < marcas.size(); ++i) {
-                doc.elementsByTagName("");
+
+
+            QDomNodeList dispositivos = xmlDeRespuesta.elementsByTagName("dispositivo");
+            for (int i = 0; i < dispositivos.size(); ++i) {
+                QStringList modelos = aplicacion->bd->consultarModelos(dispositivos.at(i).firstChild().toElement().text());
+                //xmlDeRespuesta.elementsByTagName("dispositivo").at(i).appendChild(xmlDeRespuesta.createElement("modelo"));
+                xmlDeRespuesta = aplicacion->xmlh->generateXmlOfModelos(xmlDeRespuesta,modelos,i);
             }
-            */
+
+
             pClient->sendTextMessage(xmlDeRespuesta.toString());
         }
 

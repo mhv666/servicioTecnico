@@ -12,6 +12,8 @@ public:
     bool QstringToXml(QString message);
     QString readContentOfTag( QString xml,QString nombreTag);
     QDomDocument generateXmlOfMarcas(QStringList marcas);
+    QDomDocument generateXmlOfModelos(QDomDocument doc,QStringList modelos,int marca);
+
 
 
 };
