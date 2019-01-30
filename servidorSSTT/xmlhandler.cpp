@@ -130,19 +130,21 @@ QDomElement dispositivos = doc.createElement("dispositivos");
 for (int i = 0; i < marcas.size(); ++i) {
     QDomElement dispositivo = doc.createElement("dispositivo");
     QDomElement marca = doc.createElement("marca");
-    ///****************************************************///
-    /// Mirar documentacion qdomText e implementarlo
-    ///****************************************************///
-    QDomText nombreMarca = marcas.at(i);
-    marca.appendChild(nombreMarca);
+
+    //QDomText nombreMarca;
+    //nombreMarca.setData(marcas.at(i));
+   // qDebug()<<"MARCAS"<<marcas.at(i);
+    //doc.createTextNode(marcas.at(i));
+    marca.appendChild(doc.createTextNode(marcas.at(i)));
     dispositivos.appendChild(dispositivo);
     dispositivo.appendChild(marca);
 }
 
+
+root.appendChild(header);
+root.appendChild(payload);
 payload.appendChild(dispositivos);
 header.appendChild(tipo);
-root.appendChild(payload);
-root.appendChild(header);
 doc.appendChild(root);
 
 return doc;

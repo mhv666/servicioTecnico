@@ -44,13 +44,18 @@ void WebSocket::proessTextMessage(QString message)
 
     if (aplicacion->xmlh->readContentOfTag(message,"header")=="request_modelos")
     {
-        if (aplicacion->xmlh->validaXML("modelos.xml")){
+        if (aplicacion->xmlh->validaXML("modelos.xml"))
+        {
             QStringList marcas = aplicacion->bd->consultarMarcas();
-            QDomDocument doc = aplicacion->xmlh->generateXmlOfMarcas(marcas);
+
+
+            QDomDocument xmlDeRespuesta = aplicacion->xmlh->generateXmlOfMarcas(marcas);
+
            /* for (int i = 0; i < marcas.size(); ++i) {
                 doc.elementsByTagName("");
             }
             */
+            pClient->sendTextMessage(xmlDeRespuesta.toString());
         }
 
 
