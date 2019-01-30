@@ -6,7 +6,7 @@
 #include <QtCore/QByteArray>
 #include "QtWebSockets/qwebsocketserver.h"
 #include "QtWebSockets/qwebsocket.h"
-#include "app.h"
+
 
 
 class QWebSocketServer;
@@ -33,5 +33,5 @@ private:
     QWebSocketServer *m_webSocketServer;
     QList<QWebSocket *>m_clients;
 };
-extern App *aplicacion;
+
 #endif // WEBSOCKET_H

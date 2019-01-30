@@ -62,15 +62,19 @@ QString BaseDatos::estadoRma(QString idRma)
 QStringList BaseDatos::consultarMarcas()
 {
     bool ok = mdb.open();
+
     QStringList marcas;
     if (ok)
     {
 
      QSqlQuery query("SELECT nombre_marca_dispositivo FROM marca_dispositivo;");
 
-     while (query.next()) {
+     while (query.next())
+     {
+
         marcas.append(query.value(0).toString());
      }
+
 
      return marcas;
     }
@@ -78,5 +82,27 @@ QStringList BaseDatos::consultarMarcas()
     return marcas;
 }
 
+QStringList BaseDatos::consultarModelos(QString marca)
+{
+    bool ok = mdb.open();
+    QStringList modelos;
+    if (ok)
+    {
+
+
+    ///*************************************************************///
+    ///TODO: acabar de hacer la query, esta incompleta, falta hacer join
+    ///*************************************************************///
+     QSqlQuery query("SELECT nombre_modelo_dispositivo FROM modelo_dispositivo;");
+
+     while (query.next()) {
+        modelos.append(query.value(0).toString());
+     }
+
+     return modelos;
+    }
+
+    return modelos;
+}
 
 

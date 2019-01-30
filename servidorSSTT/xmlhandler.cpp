@@ -90,7 +90,7 @@ if (readContentOfTag(message,"tipo") == "modelos_request")
        doc = xmlReadMemory(message.toStdString().c_str(),strlen(message.toStdString().c_str()),"modelos.xml",NULL,0);
        if (doc ==NULL)
        {
-           qDebug()<<"error alconvertir a modelos.xml";
+           qDebug()<<"error  linea 93 xmlhandler.cpp";
 
            return false;
        }
@@ -101,7 +101,7 @@ if (readContentOfTag(message,"tipo") == "modelos_request")
         * @doc el documento en si
         * @1 el formato -> 0=nonformatted, 1=indented formatting, 2= nonindented values.
         */
-        xmlSaveFormatFile("modelos.xml",doc,1);
+        xmlSaveFormatFile("modelos_request.xml",doc,1);
         xmlFreeDoc(doc);
        return true;
     }else if(readContentOfTag(message,"tipo") == "insert")
@@ -118,8 +118,39 @@ if (readContentOfTag(message,"tipo") == "modelos_request")
     }
 
 }
+QDomDocument XmlHandler::generateXmlOfMarcas(QStringList marcas)
+{
+QDomDocument doc;
+QDomElement root = doc.createElement("document");
+QDomElement header = doc.createElement("header");
+QDomElement payload = doc.createElement("payload");
+QDomElement tipo = doc.createElement("tipo");
+QDomElement dispositivos = doc.createElement("dispositivos");
 
-QString XmlHandler::readContentOfTag( QString xml ,QString nombreTag){
+for (int i = 0; i < marcas.size(); ++i) {
+    QDomElement dispositivo = doc.createElement("dispositivo");
+    QDomElement marca = doc.createElement("marca");
+    ///****************************************************///
+    /// Mirar documentacion qdomText e implementarlo
+    ///****************************************************///
+    QDomText nombreMarca = marcas.at(i);
+    marca.appendChild(nombreMarca);
+    dispositivos.appendChild(dispositivo);
+    dispositivo.appendChild(marca);
+}
+
+payload.appendChild(dispositivos);
+header.appendChild(tipo);
+root.appendChild(payload);
+root.appendChild(header);
+doc.appendChild(root);
+
+return doc;
+}
+
+
+QString XmlHandler::readContentOfTag( QString xml ,QString nombreTag)
+{
 
 QDomDocument doc;
 doc.setContent(xml);

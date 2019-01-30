@@ -7,9 +7,12 @@ class XmlHandler
 public:
     XmlHandler();
     bool validaXML(const char *xml);
+    bool procesarXml(QString xml);
     bool validarDomInsert(QString xml);
     bool QstringToXml(QString message);
     QString readContentOfTag( QString xml,QString nombreTag);
+    QDomDocument generateXmlOfMarcas(QStringList marcas);
+
 
 };
 

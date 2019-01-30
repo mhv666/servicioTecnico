@@ -3,7 +3,8 @@
 #include "QtWebSockets/qwebsocketserver.h"
 #include "QtWebSockets/qwebsocket.h"
 #include "xmlhandler.h"
-
+#include "app.h"
+extern App *aplicacion;
 WebSocket::WebSocket(quint16 port):
     m_webSocketServer(new QWebSocketServer(QStringLiteral("Central server"),
                                            QWebSocketServer::NonSecureMode,this))
@@ -36,24 +37,30 @@ void WebSocket::onNewConnection()
 void WebSocket::proessTextMessage(QString message)
 {
     QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
-    XmlHandler xmlh;   
-    xmlh.QstringToXml(message);
+    aplicacion->xmlh->QstringToXml(message);
 
-    if (xmlh.readContentOfTag(message,"header")=="request_modelos")
+
+
+
+    if (aplicacion->xmlh->readContentOfTag(message,"header")=="request_modelos")
     {
-        if (xmlh.validaXML("modelos.xml")){
-
-            emit consultarMarcas();
-
+        if (aplicacion->xmlh->validaXML("modelos.xml")){
+            QStringList marcas = aplicacion->bd->consultarMarcas();
+            QDomDocument doc = aplicacion->xmlh->generateXmlOfMarcas(marcas);
+           /* for (int i = 0; i < marcas.size(); ++i) {
+                doc.elementsByTagName("");
+            }
+            */
         }
 
 
 
-    }else if(xmlh.readContentOfTag(message,"header")=="insert")
+    }else if(aplicacion->xmlh->readContentOfTag(message,"header")=="insert")
     {
-         xmlh.validaXML("nuevaOrden.xml");
-    }
+        if (aplicacion->xmlh->validaXML("nuevaOrden.xml")){
 
+        }
+    }
     qDebug() << "De:" << pClient << "Mensaje recibido:" << message;
 
 }
@@ -67,3 +74,4 @@ void WebSocket::socketDisconnected()
         pClient->deleteLater();
     } // end if
 }
+
