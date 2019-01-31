@@ -25,20 +25,60 @@ Antes de empezar necesitaremos estos componentes de software
 Una vez instalado todo el software necesario procederemos:
 _Poner en ejecuccuion los servicios postgres y apache_
 ```
-Abrir Yast --> Administrador de servicios
-_y activar: _
+Abrir **Yast** --> **Administrador de servicios**
+ y activar:
 apache2
 postgresql
 ```
+A continuacion habilitamos php en apache:
+```
+a2enmod php7
+```
+Ahora toca ir a configurar el servicio de postgres: 
+Editar estos archivos:
+
+- _postgresql.conf_
+- _phppg_hba.conf_
+
+en estos archivos hay que quitar la "#" de las siguientes palabras:
+```
+listen_addres
+port
+```
+Procederemos a reiniciar el servicio
+```
+sudo systemctl restart postgresql
+```
+Ahora hay que iniciar como usuario postgres, para ello utilizamos el siguiente comando:
+```
+su postgres
+```
+Acto seguido crearemos un usuario nuevo:
+```
+createuser -sP [nombre usuario]
+```
+
+ahora, hay qué editar este archivo:
+_/etc/phpPgmyadmin/config.inc.php_
+
+
+Hay que modificar 2 lineas
+- en _$conf_  en la parte del host escribir entre comillas simples localhost
+- en _$conf_  en la parte del port escribir 5432
+
+
+
 ----------
 
 ## Posibles Fallos
 - Fallo en el inicio del servicio de apache
-  _Solucion_
+  - _Solucion_
     Ir a:
     ```
     /etc/apache2/conf.d/phpPgAdmin.conf
     ```
-    _y borrar las lineas de "<2.4>" y "<ifVersion>"_
-     
+    y borrar las lineas de:
+    ```
+     "<2.4>" y "<ifVersion>"
+    ```
  
