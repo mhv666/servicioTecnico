@@ -368,13 +368,16 @@ INSERT INTO public.estado VALUES (5, 'Enviado a la tienda');
 
 INSERT INTO public.marca_dispositivo VALUES (1, 'Samsung');
 INSERT INTO public.marca_dispositivo VALUES (2, 'Apple');
-INSERT INTO public.marca_dispositivo VALUES (3, 'Apple');
 
 
 --
 -- Data for Name: modelo_dispositivo; Type: TABLE DATA; Schema: public; Owner: usuario
 --
 
+INSERT INTO public.modelo_dispositivo VALUES (1, 's9', 1);
+INSERT INTO public.modelo_dispositivo VALUES (2, 's8', 1);
+INSERT INTO public.modelo_dispositivo VALUES (3, 'iphone X', 2);
+INSERT INTO public.modelo_dispositivo VALUES (4, 'iphone 3', 2);
 
 
 --
@@ -408,7 +411,7 @@ SELECT pg_catalog.setval('public."Cliente_id_cliente_seq"', 1, true);
 -- Name: dispositivo_id_dispositivo_seq; Type: SEQUENCE SET; Schema: public; Owner: usuario
 --
 
-SELECT pg_catalog.setval('public.dispositivo_id_dispositivo_seq', 3, true);
+SELECT pg_catalog.setval('public.dispositivo_id_dispositivo_seq', 5, true);
 
 
 --
@@ -422,7 +425,7 @@ SELECT pg_catalog.setval('public.estado_id_estado_seq', 5, true);
 -- Name: modelo_dispositivo_id_modelo_dispositivo_seq; Type: SEQUENCE SET; Schema: public; Owner: usuario
 --
 
-SELECT pg_catalog.setval('public.modelo_dispositivo_id_modelo_dispositivo_seq', 1, false);
+SELECT pg_catalog.setval('public.modelo_dispositivo_id_modelo_dispositivo_seq', 4, true);
 
 
 --
