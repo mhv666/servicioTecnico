@@ -52,7 +52,8 @@
     xmlDoc = parser.parseFromString(recivedMessage,"text/xml");
 
     if (xmlDoc.getElementsByTagName("tipo")[0].childNodes[0].nodeValue = "modelos_result") {
-      for (let i = 0; i < xmlDoc.getElementsByTagName("dispositivo").length; i++) {
+      var lengthDispositivo =xmlDoc.getElementsByTagName("dispositivo").length;
+      for (let i = 0; i < lengthDispositivo; i++) {
        // var marca = xmlDoc.getElementsByTagName("dispositivo")[i].childNodes[0].childNodes[0].nodeValue;
         var marca = xmlDoc.getElementsByTagName("marca")[i].childNodes[0].nodeValue;
         var newOption = document.createElement("option")
@@ -61,18 +62,26 @@
         
            document.getElementById("marca").append(newOption)     
 
+           
            //TODO: que cuando seleccionemos una marca nos carge los modelos correspondientes
-        for (let j = 0; j < xmlDoc.getElementsByTagName("dispositivo")[0].children.length -1; j++) {
+           var lengthModelos  = xmlDoc.getElementsByTagName("dispositivo")[0].children.length -1;
+     
+        var modelos = [];
+            modelos = document.getElementsByXPath("/document/payload/dispositivos/dispositivo["+ (i+1) +"]/modelo",xmlDoc);
+              for (let j = 0; j < modelos.length; j++) {
+                var newOption = document.createElement("option");
+
+                  newOption.value = modelos[j].firstChild.textContent;
+                  newOption.innerHTML = modelos[j].firstChild.textContent;
+                  newOption.className = marca;
+                  document.getElementById("modelo").append(newOption); 
+                
+              }
+          //var modelo = xmlDoc.getElementsByTagName("dispositivo")[0].children[j+1].textContent;
+
           
-          var modelo = xmlDoc.getElementsByTagName("dispositivo")[0].children[j+1].textContent;
 
-          var newOption = document.createElement("option")
-          newOption.value = modelo;
-          newOption.innerHTML = modelo;
-          newOption.className = marca;
-          document.getElementById("modelo").append(newOption); 
-
-        }
+        
 
 
       }
@@ -102,6 +111,39 @@
     
   }
 
+  document.getElementsByXPath = function(xpath, contextNode)
+{
+        if(contextNode === undefined)
+        {
+                var xpathResult = document.evaluate(xpath, document, null, XPathResult.ANY_TYPE, null);
+        }
+        else
+        {
+                var xpathResult = contextNode.evaluate(xpath, contextNode, null, XPathResult.ANY_TYPE, null);
+        }
+        var array = [];
+        var element;
+        element = xpathResult.iterateNext();
+        while(element)
+        {
+                array[array.length] = element;
+                element = xpathResult.iterateNext();
+        }
+        return array;
+}
+
+document.getElementByXPath = function(xpath, contextNode)
+{
+        if(contextNode === undefined)
+        {
+                var xpathResult = document.evaluate(xpath, document, null, XPathResult.ANY_TYPE, null);
+        }
+        else
+        {
+                var xpathResult = contextNode.evaluate(xpath, contextNode, null, XPathResult.ANY_TYPE, null);
+        }
+        return xpathResult.iterateNext();
+}
   /*
   QString XmlHandler::readContentOfTag( QString xml ,QString nombreTag)
 {
