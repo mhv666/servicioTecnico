@@ -4,6 +4,10 @@
   var recivedMessage;
   var parser;
   var xmlDoc;
+  $(function(){
+    $("#modelo").chained("#marca");
+   });
+
   function init()
   {
     error = document.getElementById("error");
@@ -56,8 +60,23 @@
         newOption.innerHTML = marca ;
         
            document.getElementById("marca").append(newOption)     
-      // document.getElementById("marca").childNodes[0].innerHTML("<option>"+ +"</option>");
+
+           //TODO: que cuando seleccionemos una marca nos carge los modelos correspondientes
+        for (let j = 0; j < xmlDoc.getElementsByTagName("dispositivo")[0].children.length -1; j++) {
+          
+          var modelo = xmlDoc.getElementsByTagName("dispositivo")[0].children[j+1].textContent;
+
+          var newOption = document.createElement("option")
+          newOption.value = modelo;
+          newOption.innerHTML = modelo;
+          newOption.className = marca;
+          document.getElementById("modelo").append(newOption); 
+
+        }
+
+
       }
+
     }
 
 
@@ -82,11 +101,7 @@
       error.innerHTML = message;
     
   }
-   function readContentOfTag(xml, nombreTag)
-   {
-     
 
-   }
   /*
   QString XmlHandler::readContentOfTag( QString xml ,QString nombreTag)
 {
