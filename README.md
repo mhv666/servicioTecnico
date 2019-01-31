@@ -23,6 +23,8 @@ Antes de empezar necesitaremos estos componentes de software
 
 ## Instalacion
 Una vez instalado todo el software necesario procederemos:
+
+
 _Poner en ejecuccuion los servicios postgres y apache_
 ```
 Abrir **Yast** --> **Administrador de servicios**
@@ -73,6 +75,7 @@ Hay que modificar 2 lineas
 ## Posibles Fallos
 - Fallo en el inicio del servicio de apache
   - _Solucion_
+
     Ir a:
     ```
     /etc/apache2/conf.d/phpPgAdmin.conf
@@ -81,4 +84,20 @@ Hay que modificar 2 lineas
     ```
      "<2.4>" y "<ifVersion>"
     ```
+- Instalacion de una version anterior de phppgadmin
+  -  _Solucion_ 
+    
+    Proceder con el borrado recursivo de la instalacion anterior:
+    ```
+    rm -rf phpPgAdmin
+    ```
+    Procederemos a lainstalacion de la version correcta mediante wget:
+    ```
+    wget https://github.com/phppgadmin/phppgadmin/releases/download/REL_5-6-0/phpPgAdmin-5.6.0.tar.bz2
+    ```
+    Una vez descargado, procedemos a la descompresion:
+    ```
+    tar -xjvf phpPgAdmin-5.6.0.tar.bz2
+    ```
+    
  
