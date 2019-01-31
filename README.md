@@ -13,12 +13,14 @@ Antes de empezar necesitaremos estos componentes de software
 
 2. Paquetes necessarios
  - libqt55ql5-postgresql - Driver necesario para qt pueda conectarse apostgres
+ - QTwebsocket5          -
+ - libqt5-qtwebsockets   -
  - postgresql            - Cliente SQL
  - postgresql-contrib    - Extensiones de Postgres(utiles si queremos añadir un campo uuid)  
  - postgresql-server     - Servidor SQL
  - phppgadmin            - Pagina de administracion de la Base de datos 
  - Servidor Web y Lamp   - Pattern que incluye todo lo necesario para el servidor web
-
+ 
 ----------
 
 ## Instalacion
@@ -68,6 +70,13 @@ Hay que modificar 2 lineas
 - en _$conf_  en la parte del host escribir entre comillas simples localhost
 - en _$conf_  en la parte del port escribir 5432
 
+y para finalizar hay que añadir las siguientes lineas en el .Pro del proyecto en qt.
+```
+QT += websockets
+QT += XML
+Config += c++11 
+
+```
 
 
 ----------
