@@ -7,8 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="index.css">
-    <script src="http://code.jquery.com/jquery-2.0.3.min.js" data-semver="2.0.3" data-require="jquery"></script>
-    <script type="text/javascript" src="http://www.appelsiini.net/projects/chained/jquery.chained.js?v=0.9.10"></script>
     <script src="index.js"></script>
     <title>Cliente Central</title>
 
@@ -44,22 +42,22 @@
                     <p>
                         <label for="">Marca</label>
                         <!-- <input type="text" name="name" id=""> -->
-                        <select class= "dispositivo"id="marca" onchange="rellenarModelos()"                        ()">
-                            <option id="sel_marca"value="null">Seleccione una:</option>
+                        <select class="dispositivo" id="marca" onchange="rellenarModelos()">
+                            <option id="sel_marca" value="null">Seleccione una:</option>
                         </select>
                     </p>
                     <p class="full">
                         <label for="">Modelo</label>
                         <!-- <input type="text" name="name" id=""> -->
                         <div class="select">
-                            <select class= "dispositivo" id="modelo">
+                            <select class="dispositivo" id="modelo">
                                 <option value="null">Seleccione uno:</option>
                             </select>
                         </div>
                     </p>
-                    <p class="full">
-                        <button type="button" onclick="reqTelefonos()">Cargar Telefonos</button>
-                    </p>
+                    <!-- <p class="full">
+                        <button type="button" onclick="borrarElementosEnModelos()">borrar modelos</button>
+                    </p> -->
                     <p class="full">
                         <h4 id="error">hola</h4>
                     </p>
@@ -72,7 +70,7 @@
                         <textarea name="Descripcion" rows="5"></textarea>
                     </p>
                     <p class="full">
-                        <button>Enviar</button>
+                        <button type="button" onclick="enviarNuevaOrdenXml()">Enviar</button>
                     </p>
 
                 </form>
