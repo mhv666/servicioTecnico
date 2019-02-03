@@ -51,7 +51,7 @@ function onMessage(evt) {
     recivedMessage = evt.data;
 
     buscarMarcas();
-    console.log(evt.data);
+    
 }
 
 function buscarMarcas()
@@ -71,7 +71,7 @@ function buscarMarcas()
             newOption.value = marca;
             newOption.innerHTML = marca;
 
-            document.getElementById("marca").append(newOption)
+            document.getElementById("marca").append(newOption);
                   
         } //end for
     } // end if
@@ -199,9 +199,77 @@ function borrarElementosEnModelos()
 
 }
 // eslint-disable-next-line
-function enviarNuevaOrdenXml(){
+function crearNuevaOrdenXml(){
 //https://stackoverflow.com/questions/14340894/create-xml-in-javascript
 //https://developer.mozilla.org/en-US/docs/Web/API/Document_object_model/How_to_create_a_DOM_tree
+    var doctypeXml = document.implementation.createDocumentType("rma","SYSTEM","newRma.dtd");
+    var xmlToSend = document.implementation.createDocument("", "", doctypeXml);
+    
+    
+    var rma = xmlToSend.createElement("rma");
+    var headerElement = xmlToSend.createElement("header");
+    var payloadElement = xmlToSend.createElement("payload");
 
+    //hijos de header
+    var tipoElement = xmlToSend.createElement("tipo");
+    tipoElement.innerHTML = "newRma";
+    headerElement.appendChild(tipoElement);
+
+    //hijos de payload
+    var userElement = xmlToSend.createElement("user");
+    payloadElement.appendChild(userElement);
+    var telefonoElement = xmlToSend.createElement("telefono");
+    payloadElement.appendChild(telefonoElement);
+    var tiendaElement = xmlToSend.createElement("tienda");
+    payloadElement.appendChild(tiendaElement);
+
+    var aSolucionarElement = xmlToSend.createElement("aSolucionar");
+    payloadElement.appendChild(aSolucionarElement);
+
+    //Hijos de user
+    var nombreElement = xmlToSend.createElement("nombre");
+    nombreElement.innerHTML = document.getElementById("nombreUser").value;
+    var apellidoElement = xmlToSend.createElement("apellido");
+    apellidoElement.innerHTML = document.getElementById("apellidoUser").value;
+    var numTelefonoElement = xmlToSend.createElement("numTelefono");
+    numTelefonoElement.innerHTML = document.getElementById("numTlfUser").value;
+    userElement.appendChild(nombreElement);
+    userElement.appendChild(apellidoElement);
+    userElement.appendChild(numTelefonoElement);
+
+    //Hijos de telefono
+    var marcaElement = xmlToSend.createElement("marca");
+    marcaElement.innerHTML = document.getElementById("marca").value;
+    var modeloElement = xmlToSend.createElement("modelo");
+    modeloElement.innerHTML = document.getElementById("modelo").value;
+
+    telefonoElement.appendChild(marcaElement);
+    telefonoElement.appendChild(modeloElement);
+
+    //hijos de aSolucionar
+    aSolucionarElement.innerHTML = document.getElementById("descripcion").value;
+    
+    //Hijos de tienda
+    var idTienda = xmlToSend.createElement("idTienda");
+    idTienda.innerHTML = document.getElementById("idTienda").value;
+    tiendaElement.appendChild(idTienda);
+
+    rma.appendChild(headerElement);
+    rma.appendChild(payloadElement);
+   
+    xmlToSend.appendChild(rma);
+
+    var xmlSerializer = new XMLSerializer();
+    var stringOfXml = xmlSerializer.serializeToString(xmlToSend);
+    
+    return stringOfXml;
+    
+
+}
+function enviarXml()
+{
+    var xmlToSend = crearNuevaOrdenXml();
+    console.log(xmlToSend);
+    websocket.send(xmlToSend);
 }
 window.addEventListener("load", init, false);

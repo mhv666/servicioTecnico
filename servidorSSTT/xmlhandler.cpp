@@ -104,15 +104,15 @@ if (readContentOfTag(message,"tipo") == "modelos_request")
         xmlSaveFormatFile("modelos_request.xml",doc,1);
         xmlFreeDoc(doc);
        return true;
-    }else if(readContentOfTag(message,"tipo") == "insert")
+    }else if(readContentOfTag(message,"tipo") == "newRma")
     {
-        doc = xmlReadMemory(message.toStdString().c_str(),strlen(message.toStdString().c_str()),"nuevaOrden.xml",NULL,0);
+        doc = xmlReadMemory(message.toStdString().c_str(),strlen(message.toStdString().c_str()),"newRma.xml",NULL,0);
         if (doc ==NULL)
         {
-            qDebug()<<"error alconvertir a nuevaOrden.xml";
+            qDebug()<<"error alconvertir a newRma.xml";
             return false;
         }
-        xmlSaveFormatFile("nuevaOrden.xml",doc,1);
+        xmlSaveFormatFile("newRma.xml",doc,1);
         xmlFreeDoc(doc);
         return true;
     }

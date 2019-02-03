@@ -66,9 +66,10 @@ void WebSocket::proessTextMessage(QString message)
 
 
 
-    }else if(aplicacion->xmlh->readContentOfTag(message,"header")=="insert")
+    }else if(aplicacion->xmlh->readContentOfTag(message,"header")=="newRma")
     {
-        if (aplicacion->xmlh->validaXML("nuevaOrden.xml")){
+        if (aplicacion->xmlh->validaXML("newRma.xml")){
+
 
         }
     }
