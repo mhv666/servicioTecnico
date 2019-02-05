@@ -35,12 +35,12 @@ function reqTelefonos() {
     websocket.send(message);
 }
 
-var isValidUser;
+
 function onOpen(evt) {
-    isValidUser = false;
-    if(isValidUser){
-        reqTelefonos();
-    }
+    
+    //TODO: ejecutar funcion despues de hacer login y no alabrir el Websocket
+    reqTelefonos();
+    
 
     
 }
@@ -50,9 +50,25 @@ function onClose(evt) {
 }
 
 function onMessage(evt) {
-    
-    buscarMarcas();
+    recivedMessage = evt.data;
+    var tipo = readHeaderXml();
+    switch (tipo) {
+    case "modelos_result":
+        buscarMarcas(); 
+        break;
+    case "login_result":
+        if(isValidUser(recivedMessage))
+        {
+            //TODO: una vez validado borrar contenido de content y añadir el nuevo contenido con los campos necesarios
+            break;
+        }
+        break;
+    default:
+        break;
+    }
    
+
+    
     
     
 }
@@ -91,22 +107,13 @@ function buscaModelos(marcaBuscar)
 {
     parser = new DOMParser();
     xmlDoc = parser.parseFromString(recivedMessage, "text/xml");
-
-
-    
-                
-
-
-
-    if (xmlDoc.getElementsByTagName("tipo")[0].childNodes[0].nodeValue == "modelos_result") {
+    var tipo = xmlDoc.getElementsByTagName("tipo")[0].childNodes[0].nodeValue;
+    if ( tipo == "modelos_result") {
         var lengthDispositivo = xmlDoc.getElementsByTagName("dispositivo").length;
         borrarElementosEnModelos();
         for (let i = 0; i < lengthDispositivo; i++) {
             // var marca = xmlDoc.getElementsByTagName("dispositivo")[i].childNodes[0].childNodes[0].nodeValue;
             var marca = xmlDoc.getElementsByTagName("marca")[i].childNodes[0].nodeValue;
-
-            
-                
             if (marca == marcaBuscar)
             {
 
@@ -126,7 +133,6 @@ function buscaModelos(marcaBuscar)
                     document.getElementById("modelo").append(newOption);
         
                 }
-      
                 break;
             } // end  if
                       
@@ -284,5 +290,23 @@ function crearXmlLogin()
     
     enviarXml(xmlLogin); 
 }
-
+function borrarContenidoLogin(){
+    var contactElements =   document.getElementsByClassName("contact");
+    contactElements[0].remove();
+}
+function readHeaderXml(xml)
+{
+    parser = new DOMParser();
+    xmlDoc = parser.parseFromString(xml, "text/xml");
+    var tipo = xmlDoc.getElementsByTagName("tipo")[0].childNodes[0].nodeValue;
+    return tipo;
+}
+function isValidUser(xml)
+{
+    parser = new DOMParser();
+    xmlDoc = parser.parseFromString(xml, "text/xml");
+    var isValid = xmlDoc.getElementsByTagName("isValid")[0].childNodes[0].nodeValue;
+    if(isValid != "true") return false;
+    return true;
+}
 window.addEventListener("load", init, false);
