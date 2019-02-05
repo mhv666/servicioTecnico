@@ -107,5 +107,18 @@ QStringList BaseDatos::consultarModelos(QString marca)
 
     return modelos;
 }
+bool BaseDatos::loginCentral(QString usuario, QString password){
+
+    bool ok = mdb.open();
+    if (ok)
+    {
+         QSqlQuery query("SELECT * FROM tienda WHERE usuario ="+ usuario +"  AND password="+ password +";");
+         while (query.next())
+         {
+            return true;
+         }
+    }
+    return false;
+}
 
 

@@ -5,11 +5,8 @@ var parser;
 var xmlDoc;
 var error;
 function init() {
-    error= document.getElementById("error");
-    
+    error= document.getElementById("error");   
     testWebSocket();
-    
-
 }
 
 function testWebSocket() {
@@ -38,9 +35,14 @@ function reqTelefonos() {
     websocket.send(message);
 }
 
-
+var isValidUser;
 function onOpen(evt) {
-    reqTelefonos();
+    isValidUser = false;
+    if(isValidUser){
+        reqTelefonos();
+    }
+
+    
 }
 
 function onClose(evt) {
@@ -48,12 +50,21 @@ function onClose(evt) {
 }
 
 function onMessage(evt) {
-    recivedMessage = evt.data;
-
+    
     buscarMarcas();
+   
+    
     
 }
 
+function onError(evt) {
+    writeError("<span style='color: red;'>ERROR:</span> " + evt.data);
+}
+
+function writeError(message) {
+    error.innerHTML = message;
+
+}
 function buscarMarcas()
 {
     parser = new DOMParser();
@@ -76,8 +87,6 @@ function buscarMarcas()
         } //end for
     } // end if
 }
-  
-  
 function buscaModelos(marcaBuscar)
 {
     parser = new DOMParser();
@@ -127,22 +136,6 @@ function buscaModelos(marcaBuscar)
 
 }
 
-
-
-function onError(evt) {
-    writeError("<span style='color: red;'>ERROR:</span> " + evt.data);
-}
-
-function doSend(message) {
-
-    websocket.send(message);
-}
-
-function writeError(message) {
-    error.innerHTML = message;
-
-}
-
 document.getElementsByXPath = function (xpath, contextNode) {
     var xpathResult;
     if (contextNode === undefined) {
@@ -159,7 +152,6 @@ document.getElementsByXPath = function (xpath, contextNode) {
     }
     return array;
 };
-
 document.getElementByXPath = function (xpath, contextNode) {
     var xpathResult;
     if (contextNode === undefined) {
@@ -172,21 +164,10 @@ document.getElementByXPath = function (xpath, contextNode) {
 
 // eslint-disable-next-line
 function rellenarModelos()
-{
-    //alert(document.getElementById("marca").value);
+{  
     buscaModelos(document.getElementById("marca").value);
 }
-/*
-  QString XmlHandler::readContentOfTag( QString xml ,QString nombreTag)
-{
 
-QDomDocument doc;
-doc.setContent(xml);
-QDomNodeList list = doc.elementsByTagName(nombreTag);
-QString model= list.at(0).toElement().text();
-return model;
-}
-*/
 function borrarElementosEnModelos()
 {
     var modelosAnteriores = document.getElementById("modelo");                   
@@ -261,15 +242,47 @@ function crearNuevaOrdenXml(){
 
     var xmlSerializer = new XMLSerializer();
     var stringOfXml = xmlSerializer.serializeToString(xmlToSend);
+    enviarXml(stringOfXml);
     
-    return stringOfXml;
     
 
 }
-function enviarXml()
+function enviarXml(xml)
 {
-    var xmlToSend = crearNuevaOrdenXml();
-    console.log(xmlToSend);
-    websocket.send(xmlToSend);
+    
+    console.log(xml);
+    websocket.send(xml);
 }
+function crearXmlLogin()
+{
+    var doctypeXml = document.implementation.createDocumentType("login","SYSTEM","login.dtd");
+    var xmlToSend = document.implementation.createDocument("", "", doctypeXml);
+    var login =xmlToSend.createElement("login");
+    var headerElement = xmlToSend.createElement("header");
+    var payloadElement = xmlToSend.createElement("payload");
+    //hijos de header
+    var tipoElement = xmlToSend.createElement("tipo");
+    tipoElement.innerHTML = "loginRequest";
+    headerElement.appendChild(tipoElement);
+    //hijos de payload
+    var usernameElement = xmlToSend.createElement("username");
+    usernameElement.innerHTML = document.getElementById("nombreUser").value;
+    var passwordElement = xmlToSend.createElement("password");
+    passwordElement.innerHTML =document.getElementById("password").value;
+    payloadElement.appendChild(usernameElement);
+    payloadElement.appendChild(passwordElement);
+    //hijos de login(root)
+    login.appendChild(headerElement);
+    login.appendChild(payloadElement);
+
+
+
+    xmlToSend.appendChild(login);
+    
+    var xmlSerializer = new XMLSerializer();
+    var xmlLogin = xmlSerializer.serializeToString(xmlToSend);
+    
+    enviarXml(xmlLogin); 
+}
+
 window.addEventListener("load", init, false);

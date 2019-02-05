@@ -115,6 +115,8 @@ if (readContentOfTag(message,"tipo") == "modelos_request")
         xmlSaveFormatFile("newRma.xml",doc,1);
         xmlFreeDoc(doc);
         return true;
+    }else if(readContentOfTag(message,"tipo") == "loginRequest"){
+
     }
 
 }

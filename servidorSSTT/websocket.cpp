@@ -72,6 +72,20 @@ void WebSocket::proessTextMessage(QString message)
 
 
         }
+    }else if(aplicacion->xmlh->readContentOfTag(message,"header")=="loginRequest")
+    {
+        if (aplicacion->xmlh->validaXML("loginRequest.xml")){
+            QString usuario  = aplicacion->xmlh->readContentOfTag(message,"username");
+            QString password = aplicacion->xmlh->readContentOfTag(message,"password");
+            bool isAuthorizedUser = aplicacion->bd->loginCentral(usuario,password);
+            if(!isAuthorizedUser)
+            {
+                return;
+            }else{
+                ///TODO: enviar mensaje de login satisfactorio
+                pClient->sendTextMessage();
+            }
+        }
     }
     qDebug() << "De:" << pClient << "Mensaje recibido:" << message;
 

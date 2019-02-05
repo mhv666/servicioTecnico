@@ -49,7 +49,9 @@ ul{
 /*=============================================
 =            Form            =
 =============================================*/
-
+.centrar{
+    text-align: center;
+}
 .contact form{
     display: grid;
     grid-template-columns: 1fr 1fr;

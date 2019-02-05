@@ -12,6 +12,7 @@ int main(int argc, char *argv[])
     aplicacion  = new App();
     aplicacion->bd->connectDatabase();
 
+
     //BaseDatos  *bd = new BaseDatos();
     //WebSocket  *ws = new WebSocket(3344);
     //bd->connectDatabase();
