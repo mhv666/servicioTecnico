@@ -24,56 +24,61 @@
                     <li>Central@central.es</li>
                 </ul>
             </div>
-            <div class="contact">
-                <h3>Email us</h3>
-                <form action="">
-                    <p>
-                        <label for="nombreUser">Nombre</label>
-                        <input type="text" name="name" id="nombreUser">
-                    </p>
-                    <p>
-                        <label for="apellidoUser">Apellido/s</label>
-                        <input type="text" name="name" id="apellidoUser">
-                    </p>
-                    <p>
-                        <label for="numTlfUser">Numero de telefono</label>
-                        <input type="text" name="name" id="numTlfUser">
-                    </p>
-                    <p>
-                        <label for="marca">Marca</label>
-                        <!-- <input type="text" name="name" id=""> -->
-                        <select class="dispositivo" id="marca" onchange="rellenarModelos()">
-                            <option id="sel_marca" value="null">Seleccione una:</option>
-                        </select>
-                    </p>
-                    <p class="full">
-                        <label for="modelo">Modelo</label>
-                        <!-- <input type="text" name="name" id=""> -->
-                        <div class="select">
-                            <select class="dispositivo" id="modelo">
-                                <option value="null">Seleccione uno:</option>
+            <div id="content">
+                <div class="contact">
+                    <h3>Email us</h3>
+                    <form action="">
+                        <p>
+                            <label for="nombreUser">Nombre</label>
+                            <input type="text" name="name" id="nombreUser">
+                        </p>
+                        <p>
+                            <label for="apellidoUser">Apellido/s</label>
+                            <input type="text" name="name" id="apellidoUser">
+                        </p>
+                        <p>
+                            <label for="numTlfUser">Numero de telefono</label>
+                            <input type="text" name="name" id="numTlfUser">
+                        </p>
+                        <p>
+                            <label for="marca">Marca</label>
+                            <!-- <input type="text" name="name" id=""> -->
+                            <select class="dispositivo" id="marca" onchange="rellenarModelos()">
+                                <option id="sel_marca" value="null">Seleccione una:</option>
                             </select>
-                        </div>
-                    </p>
-                    <!-- <p class="full">
+                        </p>
+                        <p class="full">
+                            <label for="modelo">Modelo</label>
+                            <!-- <input type="text" name="name" id=""> -->
+                            <div class="select">
+                                <select class="dispositivo" id="modelo">
+                                    <option value="null">Seleccione uno:</option>
+                                </select>
+                            </div>
+                        </p>
+                        <!-- <p class="full">
                         <button type="button" onclick="borrarElementosEnModelos()">borrar modelos</button>
                     </p> -->
-                    <p class="full">
-                        <h4 id="error">hola</h4>
-                    </p>
-                    <p>
-                        <label for="idTienda">Id Tienda</label>
-                        <input type="text" name="name" id="idTienda">
-                    </p>
-                    <p class="full">
-                        <label for="descripcion">Descripcion</label>
-                        <textarea name="Descripcion" rows="5" id="descripcion"></textarea>
-                    </p>
-                    <p class="full">
-                        <button type="button" onclick="enviarXml()">Enviar</button>
-                    </p>
+                        <p class="full">
+                            <h4 id="error">hola</h4>
+                        </p>
+                        <p>
+                            <label for="idTienda">Id Tienda</label>
+                            <input type="text" name="name" id="idTienda">
+                        </p>
+                        <p class="full">
+                            <label for="descripcion">Descripcion</label>
+                            <textarea name="Descripcion" rows="5" id="descripcion"></textarea>
+                        </p>
+                        <p class="full">
+                            <button type="button" onclick="enviarXml()">Enviar</button>
+                        </p>
 
-                </form>
+                    </form>
+                </div>
+
+
+
 
             </div>
         </div>

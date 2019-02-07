@@ -41,40 +41,35 @@ void WebSocket::proessTextMessage(QString message)
 
 
 
-
-    if (aplicacion->xmlh->readContentOfTag(message,"header")=="request_modelos")
+    QString ContenidoHeader = aplicacion->xmlh->readContentOfTag(message,"header");
+    if (ContenidoHeader =="request_modelos")
     {
-        if (aplicacion->xmlh->validaXML("modelos.xml"))
+        bool isXmlValid = aplicacion->xmlh->validaXML("modelos.xml");
+        if (isXmlValid)
         {
             QStringList marcas = aplicacion->bd->consultarMarcas();
-
-
             QDomDocument xmlDeRespuesta = aplicacion->xmlh->generateXmlOfMarcas(marcas);
-
-
-
             QDomNodeList dispositivos = xmlDeRespuesta.elementsByTagName("dispositivo");
             for (int i = 0; i < dispositivos.size(); ++i) {
                 QStringList modelos = aplicacion->bd->consultarModelos(dispositivos.at(i).firstChild().toElement().text());
                 //xmlDeRespuesta.elementsByTagName("dispositivo").at(i).appendChild(xmlDeRespuesta.createElement("modelo"));
                 xmlDeRespuesta = aplicacion->xmlh->generateXmlOfModelos(xmlDeRespuesta,modelos,i);
             }
-
-
             pClient->sendTextMessage(xmlDeRespuesta.toString());
         }
 
 
 
-    }else if(aplicacion->xmlh->readContentOfTag(message,"header")=="newRma")
+    }else if(ContenidoHeader=="newRma")
     {
-        if (aplicacion->xmlh->validaXML("newRma.xml")){
-
-
+        bool isXmlValid = aplicacion->xmlh->validaXML("newRma.xml");
+        if (isXmlValid){
+            ///TODO:crear la insercion a la bbdd  y devolver si esta correcto
         }
-    }else if(aplicacion->xmlh->readContentOfTag(message,"header")=="loginRequest")
+    }else if(ContenidoHeader=="loginRequest")
     {
-        if (aplicacion->xmlh->validaXML("loginRequest.xml")){
+         bool isXmlValid = aplicacion->xmlh->validaXML("loginRequest.xml");
+        if (isXmlValid){
             QString usuario  = aplicacion->xmlh->readContentOfTag(message,"username");
             QString password = aplicacion->xmlh->readContentOfTag(message,"password");
             bool isAuthorizedUser = aplicacion->bd->loginCentral(usuario,password);
@@ -83,7 +78,7 @@ void WebSocket::proessTextMessage(QString message)
                 return;
             }else{
                 ///TODO: enviar mensaje de login satisfactorio
-                pClient->sendTextMessage();
+                //pClient->sendTextMessage();
             }
         }
     }

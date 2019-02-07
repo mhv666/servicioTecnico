@@ -38,8 +38,8 @@ function reqTelefonos() {
 
 function onOpen(evt) {
     
-    //TODO: ejecutar funcion despues de hacer login y no alabrir el Websocket
-    reqTelefonos();
+    //TODO: ejecutar funcion despues de hacer login y no al abrir el Websocket
+    //reqTelefonos();
     
 
     
@@ -51,7 +51,7 @@ function onClose(evt) {
 
 function onMessage(evt) {
     recivedMessage = evt.data;
-    var tipo = readHeaderXml();
+    var tipo = readHeaderXml(recivedMessage);
     switch (tipo) {
     case "modelos_result":
         buscarMarcas(); 
@@ -290,6 +290,34 @@ function crearXmlLogin()
     
     enviarXml(xmlLogin); 
 }
+
+function login(){
+    //crearXmlLogin();
+    var isValidUser =/*isValidUser(/*xml devuelto por el servidor )*/true;
+    if(isValidUser) {
+        borrarContenidoLogin();
+        creacrFormularioRma();
+    }
+}
+
+
+function creacrFormularioRma(){
+    var contentElement = document.getElementById("content");
+    var htmlToAdd ='<div class="contact"> <h3>Email us</h3>  <form action="">'  
+                  +'<p> <label for="nombreUser">Nombre</label> <input type="text" name="name" id="nombreUser">'
+                  +'</p><p><label for="apellidoUser">Apellido/s</label><input type="text" name="name" id="apellidoUser">'
+                  +'</p><p>    <label for="numTlfUser">Numero de telefono</label>    <input type="text" name="name" id="numTlfUser">'
+                  +' </p><p><label for="marca">Marca</label><select class="dispositivo" id="marca" onchange="rellenarModelos()">'
+                  +'    <option id="sel_marca" value="null">Seleccione una:</option> </select> </p>'
+                  +'<p class="full"><label for="modelo">Modelo</label><div class="select"><select class="dispositivo" id="modelo">'
+                  +'    <option value="null">Seleccione uno:</option></select></div></p><p class="full"><h4 id="error">hola</h4></p><p> '
+                  +'    <label for="idTienda">Id Tienda</label><input type="text" name="name" id="idTienda"></p><p class="full">                  '
+                  +'    <label for="descripcion">Descripcion</label><textarea name="Descripcion" rows="5" id="descripcion"></textarea></p>                  '
+                  +'    <p class="full"><button type="button" onclick="enviarXml()">Enviar</button></p>  </form></div>';
+    
+    contentElement.innerHTML = htmlToAdd;
+}
+
 function borrarContenidoLogin(){
     var contactElements =   document.getElementsByClassName("contact");
     contactElements[0].remove();
