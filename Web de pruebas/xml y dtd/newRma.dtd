@@ -1,0 +1,15 @@
+<!ELEMENT rma (header,payload)>
+<!ELEMENT header (tipo)>
+<!ELEMENT tipo (#PCDATA)>
+<!ELEMENT payload (user,telefono,tienda,aSolucionar)>
+<!ELEMENT user(nombre,apellido,numTelefono)>
+<!ELEMENT nombre(#PCDATA)>
+<!ELEMENT apellido(#PCDATA)>
+<!ELEMENT numTelefono(#PCDATA)>
+<!ELEMENT telefono(marca,modelo)>
+<!ELEMENT marca(#PCDATA)>
+<!ELEMENT modelo(#PCDATA)>
+<!ELEMENT tienda(idTienda)>
+<!ELEMENT idTienda(#PCDATA)>
+<!ELEMENT aSolucionar(#PCDATA)>
+ 
