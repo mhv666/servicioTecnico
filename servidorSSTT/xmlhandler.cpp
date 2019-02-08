@@ -116,7 +116,15 @@ if (readContentOfTag(message,"tipo") == "modelos_request")
         xmlFreeDoc(doc);
         return true;
     }else if(readContentOfTag(message,"tipo") == "loginRequest"){
-
+        doc = xmlReadMemory(message.toStdString().c_str(),strlen(message.toStdString().c_str()),"loginRequest.xml",NULL,0);
+        if (doc ==NULL)
+        {
+            qDebug()<<"error alconvertir a loginRequest.xml";
+            return false;
+        }
+        xmlSaveFormatFile("loginRequest.xml",doc,1);
+        xmlFreeDoc(doc);
+        return true;
     }
 
 }
@@ -167,7 +175,32 @@ QDomDocument XmlHandler::generateXmlOfModelos(QDomDocument doc,QStringList model
 
     return doc;
 }
+QDomDocument XmlHandler::generateXmlOfLogin(QString id)
+{
+    QDomDocument doc;
+    QDomElement root = doc.createElement("login");
+    QDomElement header = doc.createElement("header");
+    QDomElement payload = doc.createElement("payload");
+    QDomElement tipo = doc.createElement("tipo");
+    tipo.appendChild(doc.createTextNode("login_result"));
+    QDomElement isValid = doc.createElement("isValid");
 
+    QDomElement idTienda =doc.createElement("idTienda");
+    if (!idTienda.isNull()) {
+       isValid.appendChild(doc.createTextNode("true"));
+       idTienda.appendChild(doc.createTextNode(id));
+    }else{
+        isValid.appendChild(doc.createTextNode("false"));
+    }
+    root.appendChild(header);
+    header.appendChild(tipo);
+    root.appendChild(payload);
+    payload.appendChild(isValid);
+    payload.appendChild(idTienda);
+    doc.appendChild(root);
+    return doc;
+
+}
 QString XmlHandler::readContentOfTag( QString xml ,QString nombreTag)
 {
 

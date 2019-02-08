@@ -8,7 +8,6 @@ function init() {
     error= document.getElementById("error");   
     testWebSocket();
 }
-
 function testWebSocket() {
 
     websocket = new WebSocket(wsUri);
@@ -26,7 +25,6 @@ function testWebSocket() {
         onError(evt);
     };
 }
-
 function reqTelefonos() {
     var message = '<?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE telefonos SYSTEM "modelos_request.dtd">' +
                   '<document><header><tipo>request_modelos</tipo></header>' +
@@ -34,8 +32,6 @@ function reqTelefonos() {
                   '</document>';
     websocket.send(message);
 }
-
-
 function onOpen(evt) {
     
     //TODO: ejecutar funcion despues de hacer login y no al abrir el Websocket
@@ -44,14 +40,12 @@ function onOpen(evt) {
 
     
 }
-
 function onClose(evt) {
     
 }
-
 function onMessage(evt) {
     recivedMessage = evt.data;
-    var tipo = readHeaderXml(recivedMessage);
+    var tipo = readTagXml(recivedMessage,"tipo");
     switch (tipo) {
     case "modelos_result":
         buscarMarcas(); 
@@ -59,8 +53,15 @@ function onMessage(evt) {
     case "login_result":
         if(isValidUser(recivedMessage))
         {
+            borrarContenidoLogin();
+            crearFormularioRma();
+            reqTelefonos();
             //TODO: una vez validado borrar contenido de content y añadir el nuevo contenido con los campos necesarios
             break;
+        }else
+        {
+            alert("Usuario o password incorrecto");
+
         }
         break;
     default:
@@ -72,11 +73,9 @@ function onMessage(evt) {
     
     
 }
-
 function onError(evt) {
     writeError("<span style='color: red;'>ERROR:</span> " + evt.data);
 }
-
 function writeError(message) {
     error.innerHTML = message;
 
@@ -141,7 +140,6 @@ function buscaModelos(marcaBuscar)
     
 
 }
-
 document.getElementsByXPath = function (xpath, contextNode) {
     var xpathResult;
     if (contextNode === undefined) {
@@ -167,13 +165,11 @@ document.getElementByXPath = function (xpath, contextNode) {
     }
     return xpathResult.iterateNext();
 };
-
 // eslint-disable-next-line
 function rellenarModelos()
 {  
     buscaModelos(document.getElementById("marca").value);
 }
-
 function borrarElementosEnModelos()
 {
     var modelosAnteriores = document.getElementById("modelo");                   
@@ -290,19 +286,13 @@ function crearXmlLogin()
     
     enviarXml(xmlLogin); 
 }
-
 function login(){
-    //crearXmlLogin();
-    var isValidUser =/*isValidUser(/*xml devuelto por el servidor )*/true;
-    if(isValidUser) {
-        borrarContenidoLogin();
-        creacrFormularioRma();
-    }
+    crearXmlLogin();
+   
 }
-
-
-function creacrFormularioRma(){
+function crearFormularioRma(){
     var contentElement = document.getElementById("content");
+    var idTienda = readTagXml(recivedMessage,"idTienda");
     var htmlToAdd ='<div class="contact"> <h3>Email us</h3>  <form action="">'  
                   +'<p> <label for="nombreUser">Nombre</label> <input type="text" name="name" id="nombreUser">'
                   +'</p><p><label for="apellidoUser">Apellido/s</label><input type="text" name="name" id="apellidoUser">'
@@ -311,7 +301,7 @@ function creacrFormularioRma(){
                   +'    <option id="sel_marca" value="null">Seleccione una:</option> </select> </p>'
                   +'<p class="full"><label for="modelo">Modelo</label><div class="select"><select class="dispositivo" id="modelo">'
                   +'    <option value="null">Seleccione uno:</option></select></div></p><p class="full"><h4 id="error">hola</h4></p><p> '
-                  +'    <label for="idTienda">Id Tienda</label><input type="text" name="name" id="idTienda"></p><p class="full">                  '
+                  +'    <label for="idTienda">Id Tienda</label><input type="text"  name="name" value="'+ idTienda +' "id="idTienda" disabled></p><p class="full">                  '
                   +'    <label for="descripcion">Descripcion</label><textarea name="Descripcion" rows="5" id="descripcion"></textarea></p>                  '
                   +'    <p class="full"><button type="button" onclick="enviarXml()">Enviar</button></p>  </form></div>';
     
@@ -322,11 +312,12 @@ function borrarContenidoLogin(){
     var contactElements =   document.getElementsByClassName("contact");
     contactElements[0].remove();
 }
-function readHeaderXml(xml)
-{
+function readTagXml(xml,tagToRead)
+{   
+    
     parser = new DOMParser();
     xmlDoc = parser.parseFromString(xml, "text/xml");
-    var tipo = xmlDoc.getElementsByTagName("tipo")[0].childNodes[0].nodeValue;
+    var tipo = xmlDoc.getElementsByTagName(tagToRead)[0].childNodes[0].nodeValue;
     return tipo;
 }
 function isValidUser(xml)

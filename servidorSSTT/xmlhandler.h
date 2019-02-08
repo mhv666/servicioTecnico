@@ -13,7 +13,7 @@ public:
     QString readContentOfTag( QString xml,QString nombreTag);
     QDomDocument generateXmlOfMarcas(QStringList marcas);
     QDomDocument generateXmlOfModelos(QDomDocument doc,QStringList modelos,int marca);
-
+    QDomDocument generateXmlOfLogin(QString id);
 
 
 };

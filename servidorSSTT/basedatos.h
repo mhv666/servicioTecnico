@@ -8,7 +8,7 @@ class BaseDatos
 public:
     BaseDatos();
     void connectDatabase();
-    bool loginCentral(QString usuario, QString password);
+    QString loginCentral(QString usuario, QString password);
     QString estadoRma(QString idRma);
     QVariant crearRma(QString idCliente,QString idEstado,QString idDispositivo,QString idTecnico,QString idTienda,QString DescripcionProblema);
     QStringList consultarMarcas();
