@@ -186,11 +186,14 @@ QDomDocument XmlHandler::generateXmlOfLogin(QString id)
     QDomElement isValid = doc.createElement("isValid");
 
     QDomElement idTienda =doc.createElement("idTienda");
-    if (!idTienda.isNull()) {
+
+    if (!id.isNull()) {
        isValid.appendChild(doc.createTextNode("true"));
        idTienda.appendChild(doc.createTextNode(id));
+        qDebug()<<"isValid is true";
     }else{
         isValid.appendChild(doc.createTextNode("false"));
+        qDebug()<<"isValid is false";
     }
     root.appendChild(header);
     header.appendChild(tipo);

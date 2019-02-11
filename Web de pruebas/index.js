@@ -50,13 +50,12 @@ function onMessage(evt) {
     case "modelos_result":
         buscarMarcas(); 
         break;
-    case "login_result":
+    case "login_result":    
         if(isValidUser(recivedMessage))
         {
             borrarContenidoLogin();
             crearFormularioRma();
             reqTelefonos();
-            //TODO: una vez validado borrar contenido de content y añadir el nuevo contenido con los campos necesarios
             break;
         }else
         {
@@ -301,9 +300,9 @@ function crearFormularioRma(){
                   +'    <option id="sel_marca" value="null">Seleccione una:</option> </select> </p>'
                   +'<p class="full"><label for="modelo">Modelo</label><div class="select"><select class="dispositivo" id="modelo">'
                   +'    <option value="null">Seleccione uno:</option></select></div></p><p class="full"><h4 id="error">hola</h4></p><p> '
-                  +'    <label for="idTienda">Id Tienda</label><input type="text"  name="name" value="'+ idTienda +' "id="idTienda" disabled></p><p class="full">                  '
+                  +'    <label for="idTienda">Id Tienda</label><input type="text"  name="name" value="'+idTienda+'"id="idTienda" disabled></p><p class="full">                  '
                   +'    <label for="descripcion">Descripcion</label><textarea name="Descripcion" rows="5" id="descripcion"></textarea></p>                  '
-                  +'    <p class="full"><button type="button" onclick="enviarXml()">Enviar</button></p>  </form></div>';
+                  +'    <p class="full"><button type="button" onclick="crearNuevaOrdenXml()">Enviar</button></p>  </form></div>';
     
     contentElement.innerHTML = htmlToAdd;
 }
@@ -325,6 +324,8 @@ function isValidUser(xml)
     parser = new DOMParser();
     xmlDoc = parser.parseFromString(xml, "text/xml");
     var isValid = xmlDoc.getElementsByTagName("isValid")[0].childNodes[0].nodeValue;
+    console.log(isValid);
+    
     if(isValid != "true") return false;
     return true;
 }

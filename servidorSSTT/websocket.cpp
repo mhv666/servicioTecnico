@@ -65,14 +65,16 @@ void WebSocket::proessTextMessage(QString message)
         bool isXmlValid = aplicacion->xmlh->validaXML("newRma.xml");
         if (isXmlValid){
             ///TODO:crear la insercion a la bbdd  y devolver si esta correcto
-            QString usuario = aplicacion->xmlh->readContentOfTag(message,"");
-            QString apellido;
-            QString numTelefono;
-            QString marca;
-            QString modelo;
-            QString idTienda;
-            QString Descripcion;
-            QString marca;
+            QString usuario     = aplicacion->xmlh->readContentOfTag(message,"nombre");
+            QString apellido     = aplicacion->xmlh->readContentOfTag(message,"apellido");
+            QString numTelefono = aplicacion->xmlh->readContentOfTag(message,"numTelefono");
+            QString marca = aplicacion->xmlh->readContentOfTag(message,"marca");
+            QString modelo = aplicacion->xmlh->readContentOfTag(message,"modelo");
+            QString idTienda = aplicacion->xmlh->readContentOfTag(message,"idTienda");
+            QString Descripcion = aplicacion->xmlh->readContentOfTag(message,"aSolucionar");
+
+
+            qDebug()<<usuario<<"--"<<apellido<<"--"<<numTelefono<<"--"<<marca<<"--"<<modelo<<"--"<<idTienda<<"--"<<Descripcion;
 
         }
     }else if(ContenidoHeader=="loginRequest")
@@ -84,6 +86,10 @@ void WebSocket::proessTextMessage(QString message)
             QString idTienda = aplicacion->bd->loginCentral(usuario,password);
             if(idTienda.isNull())
             {
+                qDebug()<<"usuario no valido";
+                QDomDocument xml =aplicacion->xmlh->generateXmlOfLogin(idTienda);
+                pClient->sendTextMessage(xml.toString());
+
                 //Usuario no encontrado enviar error
                 return;
             }else{
