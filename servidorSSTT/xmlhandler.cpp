@@ -204,6 +204,31 @@ QDomDocument XmlHandler::generateXmlOfLogin(QString id)
     return doc;
 
 }
+QDomDocument XmlHandler::generateXmlReturnRma(QString idRma)
+{
+ QDomDocument doc;
+ QDomElement root = doc.createElement("document");
+ QDomElement header = doc.createElement("header");
+ QDomElement payload = doc.createElement("payload");
+ QDomElement tipo = doc.createElement("tipo");
+ tipo.appendChild(doc.createTextNode("rma_result"));
+ QDomElement rmaResult = doc.createElement("rmaResult");
+ if (!idRma.isNull()) {
+    rmaResult.appendChild(doc.createTextNode("El id del RMA es :"+idRma));
+
+
+ }else{
+     rmaResult.appendChild(doc.createTextNode("Error:No ha sido posible insertar la nueva orden"));
+
+ }
+ root.appendChild(header);
+ header.appendChild(tipo);
+ root.appendChild(payload);
+ payload.appendChild(rmaResult);
+ doc.appendChild(root);
+ return doc;
+}
+
 QString XmlHandler::readContentOfTag( QString xml ,QString nombreTag)
 {
 

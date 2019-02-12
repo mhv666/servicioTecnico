@@ -40,7 +40,7 @@ QVariant BaseDatos::crearRma(QString idCliente,QString idEstado,QString idDispos
         mdb.commit();
         id = query.lastInsertId();
 
-        qDebug()<< query.lastError();
+
         return id ;
 
     }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rma>
+	<header>
+		<tipo>rma_result</tipo>
+	</header>
+	<payload>
+		<rmaResult>idRma / error</rmaResult>
+	</payload>
+</rma> 

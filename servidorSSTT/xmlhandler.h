@@ -14,7 +14,7 @@ public:
     QDomDocument generateXmlOfMarcas(QStringList marcas);
     QDomDocument generateXmlOfModelos(QDomDocument doc,QStringList modelos,int marca);
     QDomDocument generateXmlOfLogin(QString id);
-
+    QDomDocument generateXmlReturnRma(QString idRma);
 
 };
 

@@ -84,11 +84,17 @@ void WebSocket::proessTextMessage(QString message)
             QString idModelo = aplicacion->bd->devolverIdModelo(modelo);
             QString idEstado = "1"; //Pendiente de validacion
             QString idTecnico = "1"; //Dormo es el unico tecnico
-            qDebug()<<idUsuario<<"--"<<idEstado<<"--"<<idModelo<<"--"<<idTecnico<<"--"<<idTienda<<"--"<<descripcion<<"--";
-            aplicacion->bd->crearRma(idUsuario,idEstado,idModelo,idTecnico,idTienda,descripcion);
 
-            //qDebug()<<usuario<<"--"<<apellido<<"--"<<numTelefono<<"--"<<marca<<"--"<<modelo<<"--"<<idTienda<<"--"<<descripcion;
+            QVariant idRma = aplicacion->bd->crearRma(idUsuario,idEstado,idModelo,idTecnico,idTienda,descripcion);
 
+            if (!idRma.isNull()) {
+                QDomDocument xml = aplicacion->xmlh->generateXmlReturnRma(idRma.toString());
+            }else{
+                QString null;
+                QDomDocument xml = aplicacion->xmlh->generateXmlReturnRma(null);
+            }
+
+            pClient->sendTextMessage(xml.toString());
         }
     }else if(ContenidoHeader=="loginRequest")
     {

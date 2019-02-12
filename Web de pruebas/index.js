@@ -48,7 +48,7 @@ function onMessage(evt) {
     var tipo = readTagXml(recivedMessage,"tipo");
     switch (tipo) {
     case "modelos_result":
-        buscarMarcas(); 
+        buscarMarcas();
         break;
     case "login_result":    
         if(isValidUser(recivedMessage))
@@ -62,6 +62,9 @@ function onMessage(evt) {
             alert("Usuario o password incorrecto");
 
         }
+        break;
+    case "rma_result":
+        
         break;
     default:
         break;
