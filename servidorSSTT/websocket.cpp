@@ -68,7 +68,6 @@ void WebSocket::proessTextMessage(QString message)
             QString usuario     = aplicacion->xmlh->readContentOfTag(message,"nombre");
             QString apellido     = aplicacion->xmlh->readContentOfTag(message,"apellido");
             QString numTelefono = aplicacion->xmlh->readContentOfTag(message,"numTelefono");
-            QString marca = aplicacion->xmlh->readContentOfTag(message,"marca");
             QString modelo = aplicacion->xmlh->readContentOfTag(message,"modelo");
             QString idTienda = aplicacion->xmlh->readContentOfTag(message,"idTienda");
             QString descripcion = aplicacion->xmlh->readContentOfTag(message,"aSolucionar");
@@ -76,8 +75,11 @@ void WebSocket::proessTextMessage(QString message)
 
             QString idUsuario;
             idUsuario = aplicacion->bd->devolverIdUsuario(usuario,apellido,numTelefono);
+            qDebug()<< "usuario cargado: " <<idUsuario;
             if (idUsuario.isNull()) {
                 idUsuario = aplicacion->bd->crearUsuario(usuario,apellido,numTelefono).toString();
+                qDebug()<< "usuario creado: " <<idUsuario;
+
             }
             QString idModelo = aplicacion->bd->devolverIdModelo(modelo);
             QString idEstado = "1"; //Pendiente de validacion

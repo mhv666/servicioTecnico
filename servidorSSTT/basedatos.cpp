@@ -36,9 +36,11 @@ QVariant BaseDatos::crearRma(QString idCliente,QString idEstado,QString idDispos
     if(ok)
     {
         mdb.transaction();
-        QSqlQuery query("INSERT INTO rma (id_cliente,id_estado,id_dispositivo,id_tecnico,id_tienda,descripcion_rma) VALUES('"+idCliente+"','"+idEstado+"','"+idDispositivo+"','"+idTecnico+"','"+idTienda+"','"+DescripcionProblema+"') ");
+        QSqlQuery query("INSERT INTO rma (id_cliente,id_estado,id_modelo_dispositivo,id_tecnico,id_tienda,descripcion_rma) VALUES('"+idCliente+"','"+idEstado+"','"+idDispositivo+"','"+idTecnico+"','"+idTienda+"','"+DescripcionProblema+"') ");
         mdb.commit();
-        id =query.lastInsertId();
+        id = query.lastInsertId();
+
+        qDebug()<< query.lastError();
         return id ;
 
     }
