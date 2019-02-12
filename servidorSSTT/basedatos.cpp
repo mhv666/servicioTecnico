@@ -122,5 +122,48 @@ QString BaseDatos::loginCentral(QString usuario, QString password){
     }
     return resultado;
 }
+QString BaseDatos::devolverIdUsuario(QString usuario, QString apellido,QString numeroTelefono){
+    QString resultado;
+    bool ok = mdb.open();
+    if (ok)
+    {
+        QSqlQuery query("SELECT id_cliente FROM cliente WHERE  nombre_cliente='"+ usuario +"'  AND apellido_cliente='"+ apellido +"' AND tlf_cliente='"+numeroTelefono+"';");
+        while (query.next()) {
+           resultado = query.value(0).toString();
+           return resultado;
+        }
+    }
+    return resultado;
+}
+ QVariant BaseDatos::crearUsuario(QString usuario, QString apellido,QString numeroTelefono)
+ {
+     bool ok = mdb.open();
+     QVariant id;
+     if(ok)
+     {
+         mdb.transaction();
+         QSqlQuery query("INSERT INTO cliente (nombre_cliente,apellido_cliente,tlf_cliente) VALUES('"+usuario+"','"+apellido+"','"+numeroTelefono+"')");
+         mdb.commit();
+         id =query.lastInsertId();
+         return id ;
 
+     }
+
+     return id;
+ }
+QString BaseDatos::devolverIdModelo(QString nombreModelo)
+{
+    QString resultado;
+    bool ok = mdb.open();
+    if (ok)
+    {
+        QSqlQuery query("SELECT id_modelo_dispositivo FROM modelo_dispositivo WHERE nombre_modelo_dispositivo='"+ nombreModelo +"';");
+        while (query.next()) {
+           resultado = query.value(0).toString();
+           return resultado;
+        }
+    }
+    return resultado;
+
+}
 

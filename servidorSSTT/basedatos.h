@@ -13,6 +13,10 @@ public:
     QVariant crearRma(QString idCliente,QString idEstado,QString idDispositivo,QString idTecnico,QString idTienda,QString DescripcionProblema);
     QStringList consultarMarcas();
     QStringList consultarModelos(QString marca);
+    QString devolverIdUsuario(QString usuario, QString apellido,QString numeroTelefono);
+    QVariant crearUsuario(QString usuario, QString apellido,QString numeroTelefono);
+    QString devolverIdModelo(QString nombreModelo);
+
 private:
     QSqlDatabase mdb;
 };

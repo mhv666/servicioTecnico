@@ -71,10 +71,21 @@ void WebSocket::proessTextMessage(QString message)
             QString marca = aplicacion->xmlh->readContentOfTag(message,"marca");
             QString modelo = aplicacion->xmlh->readContentOfTag(message,"modelo");
             QString idTienda = aplicacion->xmlh->readContentOfTag(message,"idTienda");
-            QString Descripcion = aplicacion->xmlh->readContentOfTag(message,"aSolucionar");
+            QString descripcion = aplicacion->xmlh->readContentOfTag(message,"aSolucionar");
 
 
-            qDebug()<<usuario<<"--"<<apellido<<"--"<<numTelefono<<"--"<<marca<<"--"<<modelo<<"--"<<idTienda<<"--"<<Descripcion;
+            QString idUsuario;
+            idUsuario = aplicacion->bd->devolverIdUsuario(usuario,apellido,numTelefono);
+            if (idUsuario.isNull()) {
+                idUsuario = aplicacion->bd->crearUsuario(usuario,apellido,numTelefono).toString();
+            }
+            QString idModelo = aplicacion->bd->devolverIdModelo(modelo);
+            QString idEstado = "1"; //Pendiente de validacion
+            QString idTecnico = "1"; //Dormo es el unico tecnico
+            qDebug()<<idUsuario<<"--"<<idEstado<<"--"<<idModelo<<"--"<<idTecnico<<"--"<<idTienda<<"--"<<descripcion<<"--";
+            aplicacion->bd->crearRma(idUsuario,idEstado,idModelo,idTecnico,idTienda,descripcion);
+
+            //qDebug()<<usuario<<"--"<<apellido<<"--"<<numTelefono<<"--"<<marca<<"--"<<modelo<<"--"<<idTienda<<"--"<<descripcion;
 
         }
     }else if(ContenidoHeader=="loginRequest")
