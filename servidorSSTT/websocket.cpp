@@ -89,12 +89,16 @@ void WebSocket::proessTextMessage(QString message)
 
             if (!idRma.isNull()) {
                 QDomDocument xml = aplicacion->xmlh->generateXmlReturnRma(idRma.toString());
+                pClient->sendTextMessage(xml.toString());
+                qDebug()<< "idRma NO ES NULL: " ;
             }else{
                 QString null;
                 QDomDocument xml = aplicacion->xmlh->generateXmlReturnRma(null);
+                pClient->sendTextMessage(xml.toString());
+                qDebug()<< "idRma ES NULL: " ;
+
             }
 
-            pClient->sendTextMessage(xml.toString());
         }
     }else if(ContenidoHeader=="loginRequest")
     {

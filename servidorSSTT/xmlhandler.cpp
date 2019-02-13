@@ -226,6 +226,8 @@ QDomDocument XmlHandler::generateXmlReturnRma(QString idRma)
  root.appendChild(payload);
  payload.appendChild(rmaResult);
  doc.appendChild(root);
+
+
  return doc;
 }
 

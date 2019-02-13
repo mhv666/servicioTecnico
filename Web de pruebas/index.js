@@ -33,12 +33,7 @@ function reqTelefonos() {
     websocket.send(message);
 }
 function onOpen(evt) {
-    
-    //TODO: ejecutar funcion despues de hacer login y no al abrir el Websocket
-    //reqTelefonos();
-    
-
-    
+ 
 }
 function onClose(evt) {
     
@@ -60,10 +55,11 @@ function onMessage(evt) {
         }else
         {
             alert("Usuario o password incorrecto");
-
         }
         break;
     case "rma_result":
+    
+        extractResultOfRma(recivedMessage);
         
         break;
     default:
@@ -308,6 +304,7 @@ function crearFormularioRma(){
                   +'    <p class="full"><button type="button" onclick="crearNuevaOrdenXml()">Enviar</button></p>  </form></div>';
     
     contentElement.innerHTML = htmlToAdd;
+    error = document.getElementById("error");
 }
 
 function borrarContenidoLogin(){
@@ -331,5 +328,16 @@ function isValidUser(xml)
     
     if(isValid != "true") return false;
     return true;
+}
+
+function extractResultOfRma(recivedMessage)
+{
+    var contentOfrmaResult = readTagXml(recivedMessage,"rmaResult");
+   
+    if (contentOfrmaResult == "Error:No ha sido posible insertar la nueva orden") {
+        writeError("<span style='color: red;'>ERROR: </span> " + contentOfrmaResult);
+    }else{
+        writeError("<span style='color: green;'>SUCCES: </span> " + contentOfrmaResult);
+    }
 }
 window.addEventListener("load", init, false);
