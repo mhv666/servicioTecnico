@@ -1,6 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+#include "websocketclient.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -19,6 +19,7 @@ private slots:
     void on_pushButton_clicked();
 
 private:
+    WebSocketClient *wsc;
     Ui::MainWindow *ui;
 };
 
