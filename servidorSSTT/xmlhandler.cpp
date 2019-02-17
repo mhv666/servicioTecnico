@@ -47,6 +47,7 @@ bool XmlHandler::validaXML(const char *xml)
 
     return result;
 }
+/*
 bool XmlHandler::validarDomInsert(QString xml){
     QDomDocument doc;
     QDomDocumentType docdtd();
@@ -83,6 +84,7 @@ bool XmlHandler::validarDomInsert(QString xml){
 
 
 }
+*/
 bool XmlHandler::QstringToXml(QString message){
 xmlDocPtr doc;
 if (readContentOfTag(message,"tipo") == "modelos_request")
@@ -202,6 +204,7 @@ QDomDocument XmlHandler::generateXmlOfLogin(QString id)
     payload.appendChild(idTienda);
     doc.appendChild(root);
     return doc;
+
 
 }
 QDomDocument XmlHandler::generateXmlReturnRma(QString idRma)

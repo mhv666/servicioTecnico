@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_WEBSOCKETS_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_WEBSOCKETS_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../TecnicosSSTT -I. -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtWebSockets -isystem /usr/include/qt5/QtNetwork -isystem /usr/include/qt5/QtCore -I. -isystem /usr/include/libdrm -I. -I/usr/lib64/qt5/mkspecs/linux-g++
+INCPATH       = -I../TecnicosSSTT -I. -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtWebSockets -isystem /usr/include/qt5/QtNetwork -isystem /usr/include/qt5/QtXml -isystem /usr/include/qt5/QtCore -I. -isystem /usr/include/libdrm -I. -I/usr/lib64/qt5/mkspecs/linux-g++
 QMAKE         = /usr/bin/qmake-qt5
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -38,7 +38,7 @@ DISTNAME      = TecnicosSSTT1.0.0
 DISTDIR = /home/linux/Documents/GitWebTecnico/build-TecnicosSSTT-Desktop-Debug/.tmp/TecnicosSSTT1.0.0
 LINK          = g++
 LFLAGS        = 
-LIBS          = $(SUBLIBS) -lQt5Widgets -L/usr/lib64 -lQt5Gui -lQt5WebSockets -lQt5Network -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -lQt5Widgets -L/usr/lib64 -lQt5Gui -lQt5WebSockets -lQt5Network -lQt5Xml -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -52,11 +52,13 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../TecnicosSSTT/main.cpp \
 		../TecnicosSSTT/mainwindow.cpp \
-		../TecnicosSSTT/websocketclient.cpp moc_mainwindow.cpp \
+		../TecnicosSSTT/websocketclient.cpp \
+		../TecnicosSSTT/xmlhandler.cpp moc_mainwindow.cpp \
 		moc_websocketclient.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		websocketclient.o \
+		xmlhandler.o \
 		moc_mainwindow.o \
 		moc_websocketclient.o
 DIST          = /usr/lib64/qt5/mkspecs/features/spec_pre.prf \
@@ -162,9 +164,11 @@ DIST          = /usr/lib64/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt5/mkspecs/features/yacc.prf \
 		/usr/lib64/qt5/mkspecs/features/lex.prf \
 		../TecnicosSSTT/TecnicosSSTT.pro ../TecnicosSSTT/mainwindow.h \
-		../TecnicosSSTT/websocketclient.h ../TecnicosSSTT/main.cpp \
+		../TecnicosSSTT/websocketclient.h \
+		../TecnicosSSTT/xmlhandler.h ../TecnicosSSTT/main.cpp \
 		../TecnicosSSTT/mainwindow.cpp \
-		../TecnicosSSTT/websocketclient.cpp
+		../TecnicosSSTT/websocketclient.cpp \
+		../TecnicosSSTT/xmlhandler.cpp
 QMAKE_TARGET  = TecnicosSSTT
 DESTDIR       = 
 TARGET        = TecnicosSSTT
@@ -283,6 +287,7 @@ Makefile: ../TecnicosSSTT/TecnicosSSTT.pro /usr/lib64/qt5/mkspecs/linux-g++/qmak
 		/usr/lib64/libQt5Gui.prl \
 		/usr/lib64/libQt5WebSockets.prl \
 		/usr/lib64/libQt5Network.prl \
+		/usr/lib64/libQt5Xml.prl \
 		/usr/lib64/libQt5Core.prl
 	$(QMAKE) -o Makefile ../TecnicosSSTT/TecnicosSSTT.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
 /usr/lib64/qt5/mkspecs/features/spec_pre.prf:
@@ -392,6 +397,7 @@ Makefile: ../TecnicosSSTT/TecnicosSSTT.pro /usr/lib64/qt5/mkspecs/linux-g++/qmak
 /usr/lib64/libQt5Gui.prl:
 /usr/lib64/libQt5WebSockets.prl:
 /usr/lib64/libQt5Network.prl:
+/usr/lib64/libQt5Xml.prl:
 /usr/lib64/libQt5Core.prl:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ../TecnicosSSTT/TecnicosSSTT.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
@@ -408,8 +414,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib64/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../TecnicosSSTT/mainwindow.h ../TecnicosSSTT/websocketclient.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../TecnicosSSTT/main.cpp ../TecnicosSSTT/mainwindow.cpp ../TecnicosSSTT/websocketclient.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../TecnicosSSTT/mainwindow.h ../TecnicosSSTT/websocketclient.h ../TecnicosSSTT/xmlhandler.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../TecnicosSSTT/main.cpp ../TecnicosSSTT/mainwindow.cpp ../TecnicosSSTT/websocketclient.cpp ../TecnicosSSTT/xmlhandler.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../TecnicosSSTT/mainwindow.ui $(DISTDIR)/
 
 
@@ -445,15 +451,17 @@ moc_predefs.h: /usr/lib64/qt5/mkspecs/features/data/dummy.cpp
 compiler_moc_header_make_all: moc_mainwindow.cpp moc_websocketclient.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_mainwindow.cpp moc_websocketclient.cpp
-moc_mainwindow.cpp: ../TecnicosSSTT/mainwindow.h \
+moc_mainwindow.cpp: ../TecnicosSSTT/websocketclient.h \
+		../TecnicosSSTT/xmlhandler.h \
+		../TecnicosSSTT/mainwindow.h \
 		moc_predefs.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/linux/Documents/GitWebTecnico/TecnicosSSTT -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I. -I/usr/include/c++/7 -I/usr/include/c++/7/x86_64-suse-linux -I/usr/include/c++/7/backward -I/usr/lib64/gcc/x86_64-suse-linux/7/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/7/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include ../TecnicosSSTT/mainwindow.h -o moc_mainwindow.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/linux/Documents/GitWebTecnico/TecnicosSSTT -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtXml -I/usr/include/qt5/QtCore -I. -I/usr/include/c++/7 -I/usr/include/c++/7/x86_64-suse-linux -I/usr/include/c++/7/backward -I/usr/lib64/gcc/x86_64-suse-linux/7/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/7/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include ../TecnicosSSTT/mainwindow.h -o moc_mainwindow.cpp
 
 moc_websocketclient.cpp: ../TecnicosSSTT/websocketclient.h \
 		moc_predefs.h \
 		/usr/lib64/qt5/bin/moc
-	/usr/lib64/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/linux/Documents/GitWebTecnico/TecnicosSSTT -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtCore -I. -I/usr/include/c++/7 -I/usr/include/c++/7/x86_64-suse-linux -I/usr/include/c++/7/backward -I/usr/lib64/gcc/x86_64-suse-linux/7/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/7/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include ../TecnicosSSTT/websocketclient.h -o moc_websocketclient.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib64/qt5/mkspecs/linux-g++ -I/home/linux/Documents/GitWebTecnico/TecnicosSSTT -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtWebSockets -I/usr/include/qt5/QtNetwork -I/usr/include/qt5/QtXml -I/usr/include/qt5/QtCore -I. -I/usr/include/c++/7 -I/usr/include/c++/7/x86_64-suse-linux -I/usr/include/c++/7/backward -I/usr/lib64/gcc/x86_64-suse-linux/7/include -I/usr/local/include -I/usr/lib64/gcc/x86_64-suse-linux/7/include-fixed -I/usr/x86_64-suse-linux/include -I/usr/include ../TecnicosSSTT/websocketclient.h -o moc_websocketclient.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -475,15 +483,21 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 ####### Compile
 
 main.o: ../TecnicosSSTT/main.cpp ../TecnicosSSTT/mainwindow.h \
-		../TecnicosSSTT/websocketclient.h
+		../TecnicosSSTT/websocketclient.h \
+		../TecnicosSSTT/xmlhandler.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../TecnicosSSTT/main.cpp
 
 mainwindow.o: ../TecnicosSSTT/mainwindow.cpp ../TecnicosSSTT/mainwindow.h \
+		../TecnicosSSTT/websocketclient.h \
+		../TecnicosSSTT/xmlhandler.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../TecnicosSSTT/mainwindow.cpp
 
 websocketclient.o: ../TecnicosSSTT/websocketclient.cpp ../TecnicosSSTT/websocketclient.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o websocketclient.o ../TecnicosSSTT/websocketclient.cpp
+
+xmlhandler.o: ../TecnicosSSTT/xmlhandler.cpp ../TecnicosSSTT/xmlhandler.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o xmlhandler.o ../TecnicosSSTT/xmlhandler.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

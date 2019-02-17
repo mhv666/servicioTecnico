@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #include "websocketclient.h"
+#include "xmlhandler.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -15,11 +16,14 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+
+
 private slots:
-    void on_pushButton_clicked();
+    void on_btnBuscar_clicked();
 
 private:
-    WebSocketClient *wsc;
+    WebSocketClient *webSockerClient;
+    XmlHandler *xmlHandler;
     Ui::MainWindow *ui;
 };
 

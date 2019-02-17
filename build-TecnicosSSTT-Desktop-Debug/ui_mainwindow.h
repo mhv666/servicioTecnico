@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QListWidget>
@@ -21,7 +22,6 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -38,17 +38,18 @@ public:
     QPushButton *btnBuscar;
     QListWidget *listaDeOrdenes;
     QLabel *label;
+    QComboBox *comboBox;
+    QLabel *label_2;
+    QPushButton *pushButton;
     QMenuBar *menuBar;
-    QToolBar *mainToolBar;
     QStatusBar *statusBar;
-    QToolBar *toolBar;
     QButtonGroup *buttonGroup;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(664, 300);
+        MainWindow->resize(664, 436);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         pendienteDeValidacion = new QRadioButton(centralWidget);
@@ -75,27 +76,30 @@ public:
         EnviadoAlaTienda->setGeometry(QRect(450, 30, 141, 24));
         btnBuscar = new QPushButton(centralWidget);
         btnBuscar->setObjectName(QStringLiteral("btnBuscar"));
-        btnBuscar->setGeometry(QRect(450, 190, 201, 26));
+        btnBuscar->setGeometry(QRect(440, 200, 211, 26));
         listaDeOrdenes = new QListWidget(centralWidget);
         listaDeOrdenes->setObjectName(QStringLiteral("listaDeOrdenes"));
-        listaDeOrdenes->setGeometry(QRect(10, 30, 281, 191));
+        listaDeOrdenes->setGeometry(QRect(10, 30, 381, 201));
         label = new QLabel(centralWidget);
         label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(10, 10, 71, 18));
+        comboBox = new QComboBox(centralWidget);
+        comboBox->setObjectName(QStringLiteral("comboBox"));
+        comboBox->setGeometry(QRect(440, 300, 211, 26));
+        label_2 = new QLabel(centralWidget);
+        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setGeometry(QRect(520, 270, 58, 18));
+        pushButton = new QPushButton(centralWidget);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setGeometry(QRect(440, 340, 211, 26));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 664, 23));
         MainWindow->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(MainWindow);
-        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         MainWindow->setStatusBar(statusBar);
-        toolBar = new QToolBar(MainWindow);
-        toolBar->setObjectName(QStringLiteral("toolBar"));
-        MainWindow->addToolBar(Qt::TopToolBarArea, toolBar);
 
         retranslateUi(MainWindow);
 
@@ -108,11 +112,12 @@ public:
         pendienteDeValidacion->setText(QApplication::translate("MainWindow", "Pendiente de &validacion", Q_NULLPTR));
         preparadoParaLaValidacion->setText(QApplication::translate("MainWindow", "Preparado para la &validacion", Q_NULLPTR));
         reparado->setText(QApplication::translate("MainWindow", "Reparado", Q_NULLPTR));
-        noReparado->setText(QApplication::translate("MainWindow", "No reparado", Q_NULLPTR));
+        noReparado->setText(QApplication::translate("MainWindow", "&No reparado", Q_NULLPTR));
         EnviadoAlaTienda->setText(QApplication::translate("MainWindow", "Enviado a la tienda", Q_NULLPTR));
         btnBuscar->setText(QApplication::translate("MainWindow", "Buscar", Q_NULLPTR));
         label->setText(QApplication::translate("MainWindow", "Ordenes", Q_NULLPTR));
-        toolBar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", Q_NULLPTR));
+        label_2->setText(QApplication::translate("MainWindow", "Estado", Q_NULLPTR));
+        pushButton->setText(QApplication::translate("MainWindow", "Asignar nuevo estado", Q_NULLPTR));
     } // retranslateUi
 
 };

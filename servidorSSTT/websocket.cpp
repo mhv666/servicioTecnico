@@ -41,8 +41,8 @@ void WebSocket::proessTextMessage(QString message)
 
 
 
-    QString ContenidoHeader = aplicacion->xmlh->readContentOfTag(message,"header");
-    if (ContenidoHeader =="request_modelos")
+    QString contenidoHeader = aplicacion->xmlh->readContentOfTag(message,"header");
+    if (contenidoHeader =="request_modelos")
     {
         bool isXmlValid = aplicacion->xmlh->validaXML("modelos.xml");
         if (isXmlValid)
@@ -60,7 +60,7 @@ void WebSocket::proessTextMessage(QString message)
 
 
 
-    }else if(ContenidoHeader=="newRma")
+    }else if(contenidoHeader=="newRma")
     {
         bool isXmlValid = aplicacion->xmlh->validaXML("newRma.xml");
         if (isXmlValid){
@@ -100,7 +100,7 @@ void WebSocket::proessTextMessage(QString message)
             }
 
         }
-    }else if(ContenidoHeader=="loginRequest")
+    }else if(contenidoHeader=="loginRequest")
     {
          bool isXmlValid = aplicacion->xmlh->validaXML("loginRequest.xml");
         if (isXmlValid){
@@ -110,27 +110,31 @@ void WebSocket::proessTextMessage(QString message)
             if(idTienda.isNull())
             {
                 qDebug()<<"usuario no valido";
-                QDomDocument xml =aplicacion->xmlh->generateXmlOfLogin(idTienda);
+                QDomDocument xml = aplicacion->xmlh->generateXmlOfLogin(idTienda);
                 pClient->sendTextMessage(xml.toString());
 
                 //Usuario no encontrado enviar error
                 return;
             }else{
 
-                QDomDocument xml =aplicacion->xmlh->generateXmlOfLogin(idTienda);
+                QDomDocument xml = aplicacion->xmlh->generateXmlOfLogin(idTienda);
                 pClient->sendTextMessage(xml.toString());
             }
         }
+    }else if(contenidoHeader == "return_rma"){
+        QString estado  = aplicacion->xmlh->readContentOfTag(message,"estado");
+        aplicacion->bd->consultarRma(estado);
     }
     qDebug() << "De:" << pClient << "Mensaje recibido:" << message;
 
 }
 void WebSocket::socketDisconnected()
 {
-    QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
+    QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());    
     qDebug() << "Socket desconectado:" << pClient;
     if (pClient)
     {
+
         m_clients.removeAll(pClient);
         pClient->deleteLater();
     } // end if

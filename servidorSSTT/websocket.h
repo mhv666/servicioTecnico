@@ -7,8 +7,6 @@
 #include "QtWebSockets/qwebsocketserver.h"
 #include "QtWebSockets/qwebsocket.h"
 
-
-
 class QWebSocketServer;
 class QWebSocket;
 

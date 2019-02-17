@@ -54,12 +54,23 @@ QString BaseDatos::estadoRma(QString idRma)
     if (ok)
     {
 
-     QSqlQuery query("SELECT nombre_estado FROM rma join estado ON(rma.id_estado = estado.id_estado WHERE id_rma="+idRma+");");
+     QSqlQuery query("SELECT nombre_estado FROM rma join estado ON(rma.id_estado = estado.id_estado WHERE id_rma = "+idRma+" );");
      estado = query.value(0).toString();
      return estado;
     }
 
     return estado;
+}
+QSqlTableModel BaseDatos::consultarRma(QString estado)
+{
+    //hacer un xml donde esten todos y luego en el cliente del tecnico hacer un for de cada una e
+    //insertarlo de manera correcta.
+    QSqlQueryModel model;
+
+    model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    model.setHeaderData(0, Qt::Horizontal, tr("id cliente"));
+    model.setHeaderData(0, Qt::Horizontal, tr("id_modelo_dispositivo"));
+    model.setQuery('SELECT id_cliente,id_modelo_dispositivo FROM rma WHERE id_estado = '+ estado +' ;');
 }
 QStringList BaseDatos::consultarMarcas()
 {
@@ -90,14 +101,6 @@ QStringList BaseDatos::consultarModelos(QString marca)
     QStringList modelos;
     if (ok)
     {
-
-
-    ///*************************************************************///
-    ///TODO: acabar de hacer la query, esta incompleta, falta hacer join
-    ///
-    ///SELECT nombre_modelo_dispositivo FROM modelo_dispositivo JOIN marca_dispositivo ON modelo_dispositivo.id_marca_dispositivo = marca_dispositivo.id_marca_dispositivo WHERE marca_dispositivo.nombre_marca_dispositivo = "Samsung" ;
-    ///
-    ///*************************************************************///
      QSqlQuery query("SELECT nombre_modelo_dispositivo FROM modelo_dispositivo JOIN marca_dispositivo ON modelo_dispositivo.id_marca_dispositivo = marca_dispositivo.id_marca_dispositivo WHERE marca_dispositivo.nombre_marca_dispositivo = '"+marca+"';");
 
      while (query.next()) {

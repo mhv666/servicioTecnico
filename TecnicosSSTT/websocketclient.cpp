@@ -36,7 +36,7 @@ void WebSocketClient::sendMessage(QString message)
     if (m_connected){
         qDebug() << "Message enviado:" << message;
         m_webSocket->sendTextMessage(message);
-        m_webSocket->close();
+
     }
 }
 

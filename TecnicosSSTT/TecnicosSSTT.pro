@@ -6,6 +6,7 @@
 
 QT       += core gui
 QT       += core websockets
+QT       += xml
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = TecnicosSSTT
@@ -26,11 +27,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    websocketclient.cpp
+    websocketclient.cpp \
+    xmlhandler.cpp
 
 HEADERS += \
         mainwindow.h \
-    websocketclient.h
+    websocketclient.h \
+    xmlhandler.h
 
 FORMS += \
         mainwindow.ui
