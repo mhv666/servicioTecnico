@@ -123,6 +123,19 @@ void WebSocket::proessTextMessage(QString message)
         }
     }else if(contenidoHeader == "return_rma"){
         QString estado  = aplicacion->xmlh->readContentOfTag(message,"estado");
+
+        struct Rma
+        {
+          QString nombreCliente;
+          QString apellidoCliente;
+          QString modeloDispositivo;
+          QString idTienda;
+        };
+
+        for (int i = 0; i < total; ++i) {
+
+        }
+
         aplicacion->bd->consultarRma(estado);
     }
     qDebug() << "De:" << pClient << "Mensaje recibido:" << message;

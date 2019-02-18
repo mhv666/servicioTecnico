@@ -16,12 +16,12 @@
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
-#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTableView>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -36,11 +36,11 @@ public:
     QRadioButton *noReparado;
     QRadioButton *EnviadoAlaTienda;
     QPushButton *btnBuscar;
-    QListWidget *listaDeOrdenes;
     QLabel *label;
     QComboBox *comboBox;
     QLabel *label_2;
     QPushButton *pushButton;
+    QTableView *listaDeOrdenes;
     QMenuBar *menuBar;
     QStatusBar *statusBar;
     QButtonGroup *buttonGroup;
@@ -77,9 +77,6 @@ public:
         btnBuscar = new QPushButton(centralWidget);
         btnBuscar->setObjectName(QStringLiteral("btnBuscar"));
         btnBuscar->setGeometry(QRect(440, 200, 211, 26));
-        listaDeOrdenes = new QListWidget(centralWidget);
-        listaDeOrdenes->setObjectName(QStringLiteral("listaDeOrdenes"));
-        listaDeOrdenes->setGeometry(QRect(10, 30, 381, 201));
         label = new QLabel(centralWidget);
         label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(10, 10, 71, 18));
@@ -92,6 +89,9 @@ public:
         pushButton = new QPushButton(centralWidget);
         pushButton->setObjectName(QStringLiteral("pushButton"));
         pushButton->setGeometry(QRect(440, 340, 211, 26));
+        listaDeOrdenes = new QTableView(centralWidget);
+        listaDeOrdenes->setObjectName(QStringLiteral("listaDeOrdenes"));
+        listaDeOrdenes->setGeometry(QRect(10, 30, 411, 211));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));

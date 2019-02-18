@@ -61,8 +61,31 @@ QString BaseDatos::estadoRma(QString idRma)
 
     return estado;
 }
-QSqlTableModel BaseDatos::consultarRma(QString estado)
+QString BaseDatos::devolverRma(QString estado)
 {
+    bool ok = mdb.open();
+    struct Rma
+    {
+      QString nombreCliente;
+      QString apellidoCliente;
+      QString modeloDispositivo;
+      QString idTienda;
+    };
+
+    if (ok) {
+        //TODO: acabar de hacer la select con la join correspondiente
+       QSqlQuery query("SELECT nombre_cliente,apellido_cliente,id_modelo_dispositivo FROM rma JOIN cliente ON rma.id_cliente = cliente.id_cliente JOIN modelo_dispositivo ON rma. WHERE id_estado = "+ estado +" ;");
+       Rma allRma[];
+
+       while (query.next()) {
+       Rma result;
+       result.nombreCliente     = query.value(0).toString();
+       result.apellidoCliente   = query.value(1).toString();
+       result.modeloDispositivo = query.value(2).toString();
+       result.idTienda          = query.value(3).toString();
+       }
+    }
+    //Consulta = SELECT nombre_cliente,apellido_cliente,id_modelo_dispositivo FROM rma JOIN cliente ON rma.id_cliente = cliente.id_cliente WHERE id_estado = 1 ;
     //hacer un xml donde esten todos y luego en el cliente del tecnico hacer un for de cada una e
     //insertarlo de manera correcta.
     QSqlQueryModel model;
@@ -70,7 +93,7 @@ QSqlTableModel BaseDatos::consultarRma(QString estado)
     model->setEditStrategy(QSqlTableModel::OnManualSubmit);
     model.setHeaderData(0, Qt::Horizontal, tr("id cliente"));
     model.setHeaderData(0, Qt::Horizontal, tr("id_modelo_dispositivo"));
-    model.setQuery('SELECT id_cliente,id_modelo_dispositivo FROM rma WHERE id_estado = '+ estado +' ;');
+    model.setQuery('SELECT nombre_cliente,apellido_cliente,id_modelo_dispositivo FROM rma WHERE id_estado = '+ estado +' JOIN cliente ON rma.id_cliente = cliente.id_cliente ;');
 }
 QStringList BaseDatos::consultarMarcas()
 {

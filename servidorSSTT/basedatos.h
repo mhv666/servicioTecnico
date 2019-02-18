@@ -11,7 +11,7 @@ public:
     QString loginCentral(QString usuario, QString password);
     QString estadoRma(QString idRma);
     QVariant crearRma(QString idCliente,QString idEstado,QString idDispositivo,QString idTecnico,QString idTienda,QString DescripcionProblema);
-    QSqlTableModel consultarRma(QString estado);
+    QString devolverRma(QString estado);
     QStringList consultarMarcas();
     QStringList consultarModelos(QString marca);
     QString devolverIdUsuario(QString usuario, QString apellido,QString numeroTelefono);
